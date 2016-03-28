@@ -1,0 +1,140 @@
+\section{System description}
+The system can be described as a Classroom Response System (CRS) in the sense that it's a system made for polling and gathering responses in a classroom.
+
+The system includes features that support asking and answering technical questions\footnote{Here we've defined technical questions as questions that can display formatted code and mathematical expressions.}. In order to do so we've implemented libraries made by others. They will be described in detail in the following sections.
+
+Before describing the system, we will give a brief explanation of the technologies behind.
+
+\subsection{Technologies}
+
+The system is implemented as a web application using the Python programming language and the Django web framework. For datastorage we are using a MySQL database.
+For development purposes we are using \texttt{virtualenv}, a plugin that allows virtual python environments.
+
+\subsubsection{Django web framework}
+We have chosen the Django web framework to build the system. Django is an open-source web framework build with Python. We are using Django version 1.9.1 which was the latest release when we started developing the system.
+
+Django uses the Model-View-Controller (MVC) pattern to structure a project. \emph{Models} are the objects in the project. Models are translated into tables in the database, and that's why writing a model is similar to creating tables in a SQL database. E.g., the following model defines \emph{Room}: 
+\begin{verbatim}
+class Room(models.Model):
+    owner = models.ForeignKey(User)
+    title = models.CharField(max_length=200)
+    date_time = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def function_name(self):
+        # do stuff
+\end{verbatim}
+It's possible to define functions which belongs to a specific model as seen above. The Room model has several functions. One of these functions returns the number of subscribers and look like this:
+
+\begin{verbatim}
+def total_subscribers(self):
+    return len(self.subscription_set.all())
+\end{verbatim}
+This way of reasoning is simple to follow and puts logic belonging to a specific model right where the model is.
+
+\emph{Views} are defined in the \texttt{views.py} file within each Django app. Views specifies which \emph{template} should be rendered and what context is provided in the template. Often the view also check several things such as if the requester is allowed to see the view or not. Here's an example of the \texttt{room\_edit} view:
+
+\begin{verbatim}
+def room_edit(request, room):
+    room = get_object_or_404(Room, pk=room)
+    if not room.owner == request.user:
+        return redirect(room)
+    context = {'room': room, 'form': VoteRoomForm(instance=room)}
+    return render(request, 'vote/room_edit.html', context)
+\end{verbatim}
+This view checks if the room exists and then whether or not the requester is the owner of the room. Depending on this result, the requester is either redirected to the room he/she is trying to edit or the requester is shown the edit page of a room. The provided context in the template can be found in the context variable. Templates is what gets rendered and shown in the browser. Templates are mainly normal HTML and CSS. Within a template it's possible to use Django's template language to access the context provided by the view. 
+
+A \emph{controller} is found within each Django app. It's defined in the \texttt{urls.py} file where a regular expression is matching and directing URL requests to different views. Parts of an \texttt{url.py} file can be seen here:
+
+
+\begin{verbatim}
+urlpatterns = [
+    # ROOM
+    url(r'^room/create/$', 
+        views.CreateRoomView.as_view(), 
+        name='room_create'),
+    url(r'^room/(?P<pk>[0-9]+)/$', 
+        views.RoomDetailView.as_view(), 
+        name='room_detail'),
+    url(r'^room/(?P<room>[0-9]+)/edit/$', 
+        views.room_edit, 
+        name='room_edit'),
+    url(r'^room/(?P<room>[0-9]+)/delete/$', 
+        views.room_delete, 
+        name='room_delete'),
+    ...
+    ]
+\end{verbatim}
+
+Each requested URL from the system is being matched with one of these regular expressions which in return directs to a \emph{view}. Where the URL says \texttt{?P<room>[0-9]+}, the regular expression matches any number combination with room id's.
+
+Beside using many of Django's features, we also do use an amount of external Python libraries. A full list can be found in \texttt{requirements.txt}.
+
+\subsubsection{Data storage}
+% We do something with MySQL ...
+% Men måske bruger vi Postgres på serveren?
+
+\subsection{Project Structure}
+The structure of the project can be seen below. Each folder ends with a backslash. All of the folders shown in the root are Django apps. An app in Django-terminology is a separate part of the system. The main functionality is found within the vote app. The folder is expanded to show the structure.
+
+\dirtree{%
+    .1 CRS.
+        .2 authentication/.
+        .2 dashboard/.
+        .2 home/.
+        .2 main/.
+        .2 vote/.
+            .3 \_\_pycache\_\_/.
+            .3 migrations/.
+            .3 static/.
+            .3 templatetags/.
+            .3 templates/.
+            .3 \_\_init\_\_.py.
+            .3 admin.py.
+            .3 apps.py.
+            .3 forms.py.
+            .3 models.py.
+            .3 tests.py.
+            .3 urls.py.
+            .3 utils.py.
+            .3 views.py.
+        .2 README.md.
+        .2 manage.py.
+        .2 requirements.txt.
+}
+
+
+% Basic feature
+\subsection{Authentication}
+It's necessary to register and sign in with personal credentials (username and password) in order to use the system. Anyone can register for an account. 
+
+We use Django's build in user authentication to manage all aspects of users in the system. This includes registering users, signing in, resetting passwords - all the time consuming but critical features usually wanted in a system involving users. Furthermore, Django provides an easy to use protection against cross site request forgeries which protects users from getting their credentials stolen or hijacked.
+
+\subsection{Dashboard}
+When the user is logged in, they are presented with a personal dashboard that shows a variety of information, relevant for that user.
+The dashboard is the main entrance to the user interface. It shows all the relevant information for managing and creating rooms. 
+
+\subsection{Rooms}
+The dashboard shows all rooms the user is subscribed to and rooms owned and administrated by the user. A room is a collection of groups, and any user can create a room. The use of the term \emph{room} could be resembled with a classroom. In order to subscribe to a room, you may search for it using the search field. A blank search will show you every room available, and you may subscribe directly from the search results. It is also possible to simply obtain the rooms URL, and subscribe to it from there.
+
+\subsection{Groups and Questions}
+Within a room you'll find groups which is a collection of questions (hence a group). These groups are included in order to structure questions. There could be multiple reasons to why you would group questions together. One could be that you would want to make a group of questions public at once. Another reason could be that you would like to keep questions from each lecture separated in groups.
+
+In order to control which groups and questions are open for answers, we made a feature that would let the owner control the access. This is done by pressing open/close on groups and question. Subscribers of a room will be able to see closed groups but not the belonging questions. If a group is open, subscribers will be able to see the question but not answering them unless the questions are open as well.
+
+%% Main features
+The main feature of the system consists of creating and answering questions. When you create a new question, you are presented with an option to create one or more answers.
+These features are almost identical in every similar response system, and is part of the definition of the basic functionalities in a CRS \todo{SE BILAG FOR EN LISTE OVER CRS MÅSKE?}
+
+When creating and editing questions, we have made it possible to include code and mathematical expression in questions and answers. Code will be nicely formatted with the Prettify library \cite{google/code-prettify_2016} and mathematical expressions will be shown with the MathJax \cite{mathjax_2016}. This eliminates the need for using different systems to ask a question when you want to include code or math. To show code, it is necessary to add \texttt{<pre>} tags around the code to add line numbers and syntax highlighting. The Prettify-library will automatically determine the language and highlight it accordingly. When writing mathematical expressions into a question or answer, the creator will have to use the same syntax as in Latex. That would mean that an expressions like \verb|$a \ne 0$| would be translated into $a \ne 0$ and \verb|$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$| would be $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$
+This is meant to be convenient for people already knowing and using \LaTeX.
+
+In theory, the system supports adding unlimited answers to a question. The only criteria is that an answer can't be left empty by the creator. The creator of a question have the ability to mark one or more answers as correct. This will make subscribers able to track their performance and see whether they answered correctly or not. It's also possible not to mark an answer as correct if the system is simply used for polling, and there are no correct answer.
+
+When responses are received to a question, the owner can track what is being answered in real time. When enough responses are received, the owner can then close the question and the subscribers will be able to see the responses as well. Responses are shown with a chart which describes how many have chosen each answer. 
+
+
+\subsection{}
+When deciding what features to include in the system, we've also decided which features not to include. Some 
+
+
