@@ -35,57 +35,75 @@ The payment model differ from system to system. We will not go into details abou
 
 All the following CRS will be analysed with these heuristics taken into consideration.
 
-\subsection{Kahoot}
-Kahoot is a web based CRS, that focuses on teaching children. Kahoot themselves states that  \emph{"it gives students a voice in the classroom, and allows educators to engage and focus their students through play and creativity"} \footnote{Retrieved on 2016-3-25 \url{https://getkahoot.com/support/faq/\#is-kahoot-a-social-media-tool}}. Kahoot is purely web based and supports multiple question types such as quizzes, discussions and surveys. It has image upload support to make questions more engaging, but it does not support multiline questions and answer, nor does it have support for math notation and source code highlighting. It does have timed questions though. Even though Kahoot works well, it is only created with simple questions in mind, that would fit in one line, also the colorful design is appealing for an audience of younger age.
+\subsection*{Kahoot}
+Kahoot is a web based CRS, that focuses on teaching children. Kahoot themselves states that  \emph{"it gives students a voice in the classroom, and allows educators to engage and focus their students through play and creativity"} \footnote{Retrieved on 2016-3-25 \url{https://getkahoot.com/support/faq/\#is-kahoot-a-social-media-tool}}. Kahoot is purely web based and supports multiple question types such as quizzes, discussions and surveys. It has image upload support to make questions more engaging, but it does not support multiline questions and answer, nor does it have support for math notation and source code highlighting. It does have timed questions though. Even though Kahoot works well, it is only created with simple questions in mind, that would fit in one line, also the colorful design is appealing for an audience of younger age. Kahoot is free to use and has no payment options.
 
+\subsection*{Socrative}
+Socrative is a web based platform that supports multiple question types. It has support for multiline question and answers, but not for monospaced fonts, thus math notation and source code notation is not directly supported. There is support for imageupload, so it's possible to see an image as a question. The system is a so called \emph{K-12} solution, which means it is build for elemanty to high schoolers. Socrative is free to use, but does reserve the right to introduce payed extra features.
 
-\subsection{Socrative}
-Socrative is a web based platform that supports multiple question types. It has support for multiline question and answers, but not for monospaced fonts, thus math notation and source code notation is not directly supported. There is support for imageupload, so it's possible to see an image as a question. The system is a so called \emph{K-12} solution, which means it is build for elemanty to high schoolers.
-
-
-\subsection{Poll Everywhere}
+\subsection*{Poll Everywhere}
 Poll Everywhere is a response system with several different possibilities for voting. You can \emph{"(...) respond via the poll's web page on PollEverywhere.com, or via an embeddable voting widget, or on a mobile web browser using PollEv.com, or even through Twitter"} beside sending a text to a specified number\footnote{Retrieved on 2016-3-25 \url{https://www.polleverywhere.com/faq\#how-to-vote}}. Poll Everywhere will primary be web based since questions are created on their web page. The system support different kind of questions such as multiple choice, open ended questions, clickable images and it has a Q\&A/brainstorming feature. Furthermore, Poll Everywhere has the possibility of displaying short single lines of Latex and thus displaying math. A blog post on their site from 2012 contains a video which shows how to insert Latex at the very end of the video\footnote{Retrieved on 2016-3-25 \url{http://www.polleverywhere.com/blog/its-what-you-wanted-image-support-math-equati/}}. It has been impossible to find the information anywhere else.
 
 Poll Everywhere doesn't support multiple lines in their questions and answers, and nor does it support source code in the questions/answers. It does support images as answer but not as a question. It's not possible to time questions on Poll Everywhere and it's only possible to have one active question at any time. 
 
+\subsection*{iClicker}
+iClicker started out as a purely hardware based CRS, but has recently updated their solution with a web based platform for answering as well (including apps for iOS and Android devices). This means that teachers still need a piece of software, but students can use a web based platform for responding. It supports multiple question types. The iClicker software is capable of sending a screendump from the teachers computer to the web application (or app), thus enabling the teacher to use any software of their choosing for asking questions. In principle this enables multiline questions and math/source code notation. 
 
-\subsection{iClicker}
-iClicker started out as a purely hardware based CRS, but has recently updated their solution with a web based platform for answering as well (including apps for iOS and Android devices). This means that teachers still need a piece of software, but students can use a web based platform for responding. It supports multiple question types, but not math notation, as answers are only accepted as A,B,C,D etc. This does mean however, that nothing is hindering the teacher of asking a question in source code or math notation, and simply pointing out which is A and B. The iClicker software is capable of sending a screendump from the teachers computer to the web application (or app), this enabling the teacher to use any software of their choosing. In principle this enables multiline questions and math/source code notation.
+\subsection*{Mentimeter}
+Mentimeter is a purely web based platform and also one of the more feature rich. It supports seven different question types, but does not have any multiline support. It does however offer a description field for each question, but it is limited to 100 characters making more complex question asking hard to do. Even though Mentimeter is very feature rich, it does not have support for math notation, nor does it have source code notation.  Image upload is not supported, but timed questions are in 2 varieties. Mentimeters payment model is subscription based, with several types of subscriptions. 
 
+\subsection*{Tophat}
+Tophat is similar to Mentimeter and Poll Everywhere in form and function. It's a web based solution capable of taking attendance and asking questions. Tophat features 6 different question types, a discussion function and a tournament mode which let students compete against each other. Tophat supports displaying math and code by including tags like [math]\emph{some equation}[/math] and [code]void main()[/code]. Code is simply displayed in a grey box with black text and is not highlighting any syntax. This also implies that it's possible to ask multiline questions. However, it's not possible to create multiline answers. It's possible to set a timer on questions in order to change the status from active (labeled as "Homework") or review to review and closed. Tophat features a few more statuses but these cannot be used when scheduling a question. In order to use Tophat, every student must pay a fee corresponding to how long they intend to use the system.
 
-\subsection{Mentimeter}
-Mentimeter is a purely web based platform and also one of the more feature rich. It supports seven different question types, but does not have any multiline support. It does however offer a description field for each question, but it is limited to 100 characters making more complex question asking hard to do. Even though mentimeter is very feature rich, it does not have support for math notation, nor does it have source code notation.  
+\subsection*{Learning Catalytics}
+Learning Catalytics is a solution made by Pearson. The system seems feature rich from instruction videos and guides, but it's not possible to test for ourselves since it's behind a pay wall. Learning Catalytics seems to be software and web based from videos found at their website\footnote{Retrieved on 2016-03-28 \url{https://learningcatalytics.com/pages/training}}. The videos also reveal an advanced grading system based on how many tries it took to answer the correct answer. Learning Catalytics features options for the instructor to make a seat map which is supposedly used to tell students who to team up with when solving group exercises. An "I don't understand this"-button can be pressed to tell the instructor that you don't understand the material taught or the question asked. In order to use Learning Catalytics, students or their institution must pay for a subscription while instructors can use it for free.
 
+\subsection*{Informa}
+Informa is a system and tool for teaching Java. It's build and tested at University of Lugano. Informa is a traditional response system while it supports teaching Java with different approaches and techniques. For example: It's possible to ask students to highlight specific parts of some provided code or determine types of already highlighted code \cite[p.~2]{Hauswirth09}. Furthermore the system supports a method for asking students to draw diagrams and flowcharts \cite[p.~3]{Hauswirth09}. 
+The system consists of two different clients, an instructor client and several student clients.
 
+\subsection*{Renaissance}
+Renaissance is a hardware and software based system where users respond using the \emph{Renaissance Responder}. It is a simple multiple choice system, so multiple question types are not directly supported. Answers are limited to A,B,C,D and E and True or False via the responder hardware, multiline questions and answers are therefore not supported. Math notation is not possible but the system does have a build in calculator. Source code notation and image upload is not supported. It is unclear if timed questions are supported, as the documentation for the system is sparse, but based on the other features of the systems it is not likely. The payment model for the system is based on hardware purchases.
 
-\begin{table}[]
-\centering
-\label{my-label}
-\begin{tabular}{lllll}
- & Math  &  &  &  \\
- &  &  &  &  \\
- &  &  &  &  \\
- &  &  &  & 
-\caption{My caption}
-\end{tabular}
-\end{table}
-
-
+\subsection*{Classroom Learning Partner}
+The Classroom Learning Partner (CLP) is a software based system where \emph{"the goal of the [...] project is to increase instructor-student interaction and student learning in large classes by developing software to support the use of in-class exercises"} \footnote{Retrieved on 2016-03-29 \url{http://publications.csail.mit.edu/abstracts/abstracts07/kkoile/kkoile.html}}. The system is different from the other mentioned ones, in terms of input type, where CLP relies heavily on written input, the so called \emph{Digital Ink} input, or simply hand written input \cite{koile2007supporting}. The system supports multiple question types and also multiline questions. It is unclear wether the system supports mathematical notation, but it does support source code, since the text font is a monospaced font. It's possible to upload images, and even draw the questions. Timed questions are not available. 
 
 
 
 
+%    \item Web/Software/Hardware based
+%    \item Multiple question types
+%    \item Multiline question and answers
+%    \item Math notation
+%    \item Source code notation
+%    \item Supports image upload as questions
+%    \item Timed questions/auto closing questions
+%    \item Payment model
 
-\subsection{Tophat}
-Tophat is similar to Mentimeter and Poll Everywhere in form and function. It's a web based solution capable of taking attendance and asking questions. Tophat features 6 different question types, a discussion function and a tournament mode which let students compete agains each other.
 
-
-\subsection{Learning Catalytics}
-\subsection{Informaclicker}
-\subsection{Renaissance}
-%\subsection{Classroom Learning Partner}
-%\subsection{Informa}
-
+\begin{landscape}
+    \begin{center}
+        \begin{table}[H]
+            \begin{tabularx}{\paperwidth}{ |X|X|X|X|X|X|X|X|X| } 
+             \hline
+                 & Web \newline Software \newline Hardware based & Multiple question types & Multiline support & Math notation & Source code notation & Supports image upload as questions & Timed questions/auto closing questions & Payment model \\ \hline
+                 
+              Kahoot                & Web   & No    & No    & No    & No    & Yes   & Yes   & Free \\ \hline
+              Socrative             & Web   & Yes   & Yes   & No    & No    & Yes   & No    & Free \\ \hline
+              Poll Everywhere       & Web   & Yes   & No    & Yes   & No    & Yes   & Yes   & Subscription \\ \hline
+              iClicker              & All   & Yes   & No    & No    & No    & Yes   & No    & Mixed based on solution \\ \hline
+              Mentimeter            & Web   & Yes, 7 & No   & No    & No    & No    & Yes   & Subscription \\ \hline
+              Tophat                & Web   & Yes, 6 & Questions only & Yes & Yes   & No    & Yes & Subscription \\ \hline
+              Learning Catalytics   & Web, software   & Yes    & Yes  & N/A   & N/A   & Yes   & N/A   & Free for instructors, students or institutions pays for subscription \\ \hline
+              Informaclicker        & Software & Yes & Yes  & No & Yes   & No    & No    & Free \\ \hline
+              Renaissance           & Software \newline Hardware & Yes & No & No & No & N/A & No & Hardware purchase \\ \hline
+              Classroom Learning Partner & Software \newline Hardware & Yes & Yes & No & Yes & Yes & No & Research project, not sold \\
+             \hline
+            \end{tabularx}
+            \caption{Overview of different systems}\label{tab:overview}
+        \end{table}
+    \end{center}
+\end{landscape}
 
 
 

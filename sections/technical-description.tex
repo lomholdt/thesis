@@ -1,4 +1,4 @@
-\section{System description}
+\section{Technical description}
 The system can be described as a Classroom Response System (CRS) in the sense that it's a system made for polling and gathering responses in a classroom.
 
 The system includes features that support asking and answering technical questions\footnote{Here we've defined technical questions as questions that can display formatted code and mathematical expressions.}. In order to do so we've implemented libraries made by others. They will be described in detail in the following sections.
@@ -72,10 +72,11 @@ Beside using many of Django's features, we also do use an amount of external Pyt
 
 \subsubsection{Data storage}
 % We do something with MySQL ...
-% Men måske bruger vi Postgres på serveren?
+
 
 \subsection{Project Structure}
 The structure of the project can be seen below. Each folder ends with a backslash. All of the folders shown in the root are Django apps. An app in Django-terminology is a separate part of the system. The main functionality is found within the vote app. The folder is expanded to show the structure.
+
 
 \dirtree{%
     .1 CRS.
@@ -126,7 +127,7 @@ In order to control which groups and questions are open for answers, we made a f
 The main feature of the system consists of creating and answering questions. When you create a new question, you are presented with an option to create one or more answers.
 These features are almost identical in every similar response system, and is part of the definition of the basic functionalities in a CRS \todo{SE BILAG FOR EN LISTE OVER CRS MÅSKE?}
 
-When creating and editing questions, we have made it possible to include code and mathematical expression in questions and answers. Code will be nicely formatted with the Prettify library \cite{google/code-prettify_2016} and mathematical expressions will be shown with the MathJax \cite{mathjax_2016}. This eliminates the need for using different systems to ask a question when you want to include code or math. To show code, it is necessary to add \texttt{<pre>} tags around the code to add line numbers and syntax highlighting. The Prettify-library will automatically determine the language and highlight it accordingly. When writing mathematical expressions into a question or answer, the creator will have to use the same syntax as in Latex. That would mean that an expressions like \verb|$a \ne 0$| would be translated into $a \ne 0$ and \verb|$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$| would be $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$
+When creating and editing questions, we have made it possible to include code and mathematical expression in questions and answers. Code will be nicely formatted with the Prettify library \cite{google/code-prettify_2016} and mathematical expressions will be shown with the MathJax \cite{mathjax_2016}. This eliminates the need for using different systems to ask a question when you want to include code or math. To show code, it is necessary to add \texttt{<pre>} tags around the code to add line numbers and syntax highlighting. The Prettify-library will automatically determine the language and highlight it accordingly. When writing mathematical expressions into a question or answer, the creator will have to use the same syntax as in \LaTeX. That would mean that an expressions like \verb|$a \ne 0$| would be translated into $a \ne 0$ and \verb|$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$| would be $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$
 This is meant to be convenient for people already knowing and using \LaTeX.
 
 In theory, the system supports adding unlimited answers to a question. The only criteria is that an answer can't be left empty by the creator. The creator of a question have the ability to mark one or more answers as correct. This will make subscribers able to track their performance and see whether they answered correctly or not. It's also possible not to mark an answer as correct if the system is simply used for polling, and there are no correct answer.
