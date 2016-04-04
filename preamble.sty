@@ -18,3 +18,36 @@
 % to graphics can be omitted.
 %==============================
 \graphicspath{ {./img/} }
+
+%==============================
+% Colors
+%==============================
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+%==============================
+% Listings AKA Code
+%==============================
+\usepackage{listings}
+\lstset{frame=none,
+  captionpos=b,
+  language=Python,
+  aboveskip=8mm,
+  belowskip=5mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2,
+  stepnumber=1,
+  firstnumber=1,
+  numberfirstline=true
+}

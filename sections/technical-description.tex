@@ -7,14 +7,15 @@ Before describing the system, we will give a brief explanation of the technologi
 
 \subsection{Technologies}
 
-The system is implemented as a web application using the Python programming language and the Django web framework. For datastorage we are using a MySQL database.
+The system is implemented as a web application using the Python programming language and the Django web framework. For data storage we are using a MySQL database.
 For development purposes we are using \texttt{virtualenv}, a plugin that allows virtual python environments.
 
 \subsubsection{Django web framework}
 We have chosen the Django web framework to build the system. Django is an open-source web framework build with Python. We are using Django version 1.9.1 which was the latest release when we started developing the system.
 
 Django uses the Model-View-Controller (MVC) pattern to structure a project. \emph{Models} are the objects in the project. Models are translated into tables in the database, and that's why writing a model is similar to creating tables in a SQL database. E.g., the following model defines \emph{Room}: 
-\begin{verbatim}
+
+\begin{lstlisting}[caption=The Room Class, label=lst:room-class]
 class Room(models.Model):
     owner = models.ForeignKey(User)
     title = models.CharField(max_length=200)
@@ -23,119 +24,272 @@ class Room(models.Model):
     
     def function_name(self):
         # do stuff
-\end{verbatim}
-It's possible to define functions which belongs to a specific model as seen above. The Room model has several functions. One of these functions returns the number of subscribers and look like this:
+\end{lstlisting}
 
-\begin{verbatim}
+It's possible to define functions which belongs to a specific model as seen above. The Room model has several functions. One of these functions returns the number of subscribers and looks like this:
+
+\begin{lstlisting}[caption=The total subscribers method, label=lst:total-subscribers-method]
 def total_subscribers(self):
     return len(self.subscription_set.all())
-\end{verbatim}
+\end{lstlisting}
 This way of reasoning is simple to follow and puts logic belonging to a specific model right where the model is.
 
-\emph{Views} are defined in the \texttt{views.py} file within each Django app. Views specifies which \emph{template} should be rendered and what context is provided in the template. Often the view also check several things such as if the requester is allowed to see the view or not. Here's an example of the \texttt{room\_edit} view:
+\emph{Views} are defined in the \texttt{views.py} file within each Django app. Views specifies which \emph{template} should be rendered and what context is provided in the template. Often the view also checks several things such as if the requester is allowed to see the view or not. Here's an example of the \texttt{room\_edit} view:
 
-\begin{verbatim}
+\begin{lstlisting}[caption=The Room edit method, label=lst:room-edit-method]
 def room_edit(request, room):
     room = get_object_or_404(Room, pk=room)
     if not room.owner == request.user:
         return redirect(room)
     context = {'room': room, 'form': VoteRoomForm(instance=room)}
     return render(request, 'vote/room_edit.html', context)
-\end{verbatim}
+\end{lstlisting}
+
 This view checks if the room exists and then whether or not the requester is the owner of the room. Depending on this result, the requester is either redirected to the room he/she is trying to edit or the requester is shown the edit page of a room. The provided context in the template can be found in the context variable. Templates is what gets rendered and shown in the browser. Templates are mainly normal HTML and CSS. Within a template it's possible to use Django's template language to access the context provided by the view. 
 
-A \emph{controller} is found within each Django app. It's defined in the \texttt{urls.py} file where a regular expression is matching and directing URL requests to different views. Parts of an \texttt{url.py} file can be seen here:
+A \emph{controller} is also found within each Django app. It's defined in the \texttt{urls.py} file where a regular expression is matching and directing URL requests to different views. Parts of an \texttt{url.py} file can be seen here:
 
 
-\begin{verbatim}
+\begin{lstlisting}[caption=URL Patterns from the vote app, label=lst:urlpatterns]
 urlpatterns = [
     # ROOM
-    url(r'^room/create/$', 
-        views.CreateRoomView.as_view(), 
-        name='room_create'),
-    url(r'^room/(?P<pk>[0-9]+)/$', 
-        views.RoomDetailView.as_view(), 
-        name='room_detail'),
-    url(r'^room/(?P<room>[0-9]+)/edit/$', 
-        views.room_edit, 
-        name='room_edit'),
-    url(r'^room/(?P<room>[0-9]+)/delete/$', 
-        views.room_delete, 
-        name='room_delete'),
+    url(r'^room/create/$', views.CreateRoomView.as_view(), name='room_create'),
+    url(r'^room/(?P<pk>[0-9]+)/$', views.RoomDetailView.as_view(), name='room_detail'),
+    url(r'^room/(?P<room>[0-9]+)/edit/$', views.room_edit, name='room_edit'),
+    url(r'^room/(?P<room>[0-9]+)/delete/$', views.room_delete, name='room_delete'),
     ...
     ]
-\end{verbatim}
+\end{lstlisting}
 
 Each requested URL from the system is being matched with one of these regular expressions which in return directs to a \emph{view}. Where the URL says \texttt{?P<room>[0-9]+}, the regular expression matches any number combination with room id's.
 
-Beside using many of Django's features, we also do use an amount of external Python libraries. A full list can be found in \texttt{requirements.txt}.
+% Beside using many of Django's features, we also do use an amount of external Python libraries. A full list can be found in \texttt{requirements.txt}.
 
 \subsubsection{Data storage}
-% We do something with MySQL ...
+We have chosen a MySQL database for our data storage. Within Django's settings file for the project (\texttt{settings.py} in the main app) we specify which drivers and correct information to login to the database with. From here, Django handles all the creating and updating in the database. For example, the models specified in each app are automatically created and updated without the necessity for us to write tables directly in the database. 
 
+Every time an object is created, changed or deleted (an user, a question, an answer etc.) Django handles transactions and communication with the database. This makes a third party ORM (Object-relational mapping) service unnecessary. An ORM is typically a third party service which is sometimes paid for and takes time to integrate with the chosen framework. A short discussion of this problem can be found in the article by \citeA{johnson2005j2ee} where he highlights some of the history of Java's integration with ORM's.
+
+We could have chosen a different database for the system such as PostgreSQL. This would only require us to add another database to the before mentioned settings, tell Django to migrate and remove the old database from the settings when done. This is convenient for changing the database at a later point if it should be necessary.
+
+
+\subsubsection{Python, virtualenv and external packages}
+For developing we are using a virtual environment created with \texttt{virtualenv} to handle the required packages and their versions for the project. The environment also specifies which version of Python is used (3.5.1). The environment only lives when it's activated and when deactivated Python and all version of all packages are set to the system default. The packages only installed within the environment will not be available on the system when the environment is deactivated. 
+
+We've used an amount of external packages for creating this project, which can also be found in \texttt{requirements.txt}. Within this document we specify which version we are using unless it's the newest one. A full list is shown below:
+
+\begin{itemize}
+    \item mysqlclient
+    \item django==1.9.1
+    \item django-environ==0.4.0
+    \item django-widget-tweaks
+    \item django-mailgun
+    \item django-super-inlines
+    \item pusher
+    \item bleach
+    \item django\_compressor
+    \item short\_url
+\end{itemize}
+
+All packages are installed by running the command \texttt{pip install -r requirements.txt} from within the virtual environment. A detailed description of selected packages are given in this section according to where in the system they are used.
 
 \subsection{Project Structure}
-The structure of the project can be seen below. Each folder ends with a backslash. All of the folders shown in the root are Django apps. An app in Django-terminology is a separate part of the system. The main functionality is found within the vote app. The folder is expanded to show the structure.
+The structure of the project can be seen below. Folders are indicated by a trailing backslash. The project itself is called CRS and is located at the root of the structure. All the folders shown in the CRS folder are Django applications (app). An app in Django-terminology is a separate part of the system, that \emph{[...] describes a Python package that provides some set of features}\footnote{Retrieved on 2016-04-01, \url{https://docs.djangoproject.com/en/1.9/ref/applications/\#projects-and-applications}}. The vote folder is expanded to show the underlying structure, as an example of an application structue.
 
+\begin{figure}[H]
+    \dirtree{%
+        .1 CRS.
+            .2 authentication/.
+            .2 dashboard/.
+            .2 home/.
+            .2 main/.
+            .2 vote/.
+                .3 \_\_pycache\_\_/.
+                .3 migrations/.
+                .3 static/.
+                .3 templatetags/.
+                .3 templates/.
+                .3 \_\_init\_\_.py.
+                .3 admin.py.
+                .3 apps.py.
+                .3 forms.py.
+                .3 models.py.
+                .3 tests.py.
+                .3 urls.py.
+                .3 utils.py.
+                .3 views.py.
+            .2 README.md.
+            .2 manage.py.
+            .2 requirements.txt.
+    }
+    \caption{The Project Structure}
+    \label{fig:project-structure}
+\end{figure}
 
-\dirtree{%
-    .1 CRS.
-        .2 authentication/.
-        .2 dashboard/.
-        .2 home/.
-        .2 main/.
-        .2 vote/.
-            .3 \_\_pycache\_\_/.
-            .3 migrations/.
-            .3 static/.
-            .3 templatetags/.
-            .3 templates/.
-            .3 \_\_init\_\_.py.
-            .3 admin.py.
-            .3 apps.py.
-            .3 forms.py.
-            .3 models.py.
-            .3 tests.py.
-            .3 urls.py.
-            .3 utils.py.
-            .3 views.py.
-        .2 README.md.
-        .2 manage.py.
-        .2 requirements.txt.
-}
-
+The CRS project consists of five applications. \texttt{authentication}, \texttt{dashboard}, \texttt{home}, \texttt{main} and \texttt{vote}. Each is responsible for their own part of the CRS service, and their names are supposed to be self explanatory to a certain extend, after a proper introduction.
 
 % Basic feature
 \subsection{Authentication}
-It's necessary to register and sign in with personal credentials (username and password) in order to use the system. Anyone can register for an account. 
+The \texttt{authentication} app is responsible for all the application's authentication logic. This includes logging in users, logging them out, signing up and resetting passwords.
 
-We use Django's build in user authentication to manage all aspects of users in the system. This includes registering users, signing in, resetting passwords - all the time consuming but critical features usually wanted in a system involving users. Furthermore, Django provides an easy to use protection against cross site request forgeries which protects users from getting their credentials stolen or hijacked.
+It's necessary to register and sign in with personal credentials (username and password) in order to use the system. Anyone can register for an account from the frontpage or from the login page.
+
+We use Django's build in user authentication to manage all aspects of users in the system. This includes registering users, signing in, resetting passwords - all the time consuming but critical features usually wanted in a system involving users. Furthermore, Django provides an easy to use protection against cross site request forgeries which protects users from getting their credentials stolen or from being hijacked. 
+
+Since we have a desire to register users with an email, we have added a field to our custom user creation form. The \texttt{User} model already includes an email field, so it's only necessary to add the form input field. This is done by adding the field as shown in listing \ref{lst:custom-user-creation-form-class} on line 2, and then overriding the save method as shown in line 9.
+
+
+\begin{lstlisting}[caption=CustomUserCreationForm class, label=lst:custom-user-creation-form-class]
+class CustomUserCreationForm(UserCreationForm):
+    email = EmailField(label=_("Email address"), 
+                       required=True, 
+                       help_text=_("Required."))
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super(CustomUserCreationForm, self).save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user
+\end{lstlisting}
+
+The email is crucial for resetting passwords, otherwise the account will be lost if a user forgets his/her password. The whole process is handled by Django as long as we provide a mail back-end which is specified in the \texttt{settings.py} file found in the main app. In order to send emails we use the external service Mailgun\footnote{Retrieved on 2016-04-04 \url{https://www.mailgun.com/}}, which sends email on behalf of the system. Whenever a user requests to reset a password, an email with a unique link is sent to the users email address. The link is automatically created by Django and could look like \texttt{.../authentication/reset/MTY/4as-663c1494cfc7b061c25d/}. This links directs to a page from where the user can enter a new password.
+
 
 \subsection{Dashboard}
-When the user is logged in, they are presented with a personal dashboard that shows a variety of information, relevant for that user.
-The dashboard is the main entrance to the user interface. It shows all the relevant information for managing and creating rooms. 
-
-\subsection{Rooms}
-The dashboard shows all rooms the user is subscribed to and rooms owned and administrated by the user. A room is a collection of groups, and any user can create a room. The use of the term \emph{room} could be resembled with a classroom. In order to subscribe to a room, you may search for it using the search field. A blank search will show you every room available, and you may subscribe directly from the search results. It is also possible to simply obtain the rooms URL, and subscribe to it from there.
-
-\subsection{Groups and Questions}
-Within a room you'll find groups which is a collection of questions (hence a group). These groups are included in order to structure questions. There could be multiple reasons to why you would group questions together. One could be that you would want to make a group of questions public at once. Another reason could be that you would like to keep questions from each lecture separated in groups.
-
-In order to control which groups and questions are open for answers, we made a feature that would let the owner control the access. This is done by pressing open/close on groups and question. Subscribers of a room will be able to see closed groups but not the belonging questions. If a group is open, subscribers will be able to see the question but not answering them unless the questions are open as well.
-
-%% Main features
-The main feature of the system consists of creating and answering questions. When you create a new question, you are presented with an option to create one or more answers.
-These features are almost identical in every similar response system, and is part of the definition of the basic functionalities in a CRS \todo{SE BILAG FOR EN LISTE OVER CRS MÅSKE?}
-
-When creating and editing questions, we have made it possible to include code and mathematical expression in questions and answers. Code will be nicely formatted with the Prettify library \cite{google/code-prettify_2016} and mathematical expressions will be shown with the MathJax \cite{mathjax_2016}. This eliminates the need for using different systems to ask a question when you want to include code or math. To show code, it is necessary to add \texttt{<pre>} tags around the code to add line numbers and syntax highlighting. The Prettify-library will automatically determine the language and highlight it accordingly. When writing mathematical expressions into a question or answer, the creator will have to use the same syntax as in \LaTeX. That would mean that an expressions like \verb|$a \ne 0$| would be translated into $a \ne 0$ and \verb|$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$| would be $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$
-This is meant to be convenient for people already knowing and using \LaTeX.
-
-In theory, the system supports adding unlimited answers to a question. The only criteria is that an answer can't be left empty by the creator. The creator of a question have the ability to mark one or more answers as correct. This will make subscribers able to track their performance and see whether they answered correctly or not. It's also possible not to mark an answer as correct if the system is simply used for polling, and there are no correct answer.
-
-When responses are received to a question, the owner can track what is being answered in real time. When enough responses are received, the owner can then close the question and the subscribers will be able to see the responses as well. Responses are shown with a chart which describes how many have chosen each answer. 
+The \texttt{dashboard} app is responsible for handling the users backend. When a user logs in, they are presented with a personal dashboard that shows a variety of information, relevant for that user.
+The dashboard contains information about which rooms the user is subscribed to and information about the rooms the user owns. It's possible to create new rooms directly from the dashboard. The search endpoint is also registered within the dashboard app. Searching is added as a convenience feature for the first iteration og the project and is not meant for production use. A full text search feature using a search engine like Solr or Elasticsearch would be preferable, but since it will not add any direct value to answering our research question, it is currently implemented as a simple database look up on room names for now.
 
 
-\subsection{}
-When deciding what features to include in the system, we've also decided which features not to include. Some 
+\subsection{Home} \todo{Tilføj mere lækkert til home beskrivelsen}
+The \texttt{home} app handles all static pages, like the frontpage and also the user profile pages.
+All pages related to a home area is located within the home app. Also, the short-URL feature found in groups is handled from within the \texttt{home} app.
+
+
+\subsection{Main}
+The \texttt{main} app is special, as it is the \emph{root} app in the project. It contains the \texttt{settings.py} file, which is global for all applications. It is also where generic templates are located, such as the \texttt{base.html} file, that contains the main html structure of all pages throughout the site. Here we are able to include static asset files such as javascript, css and metatags that should be included everywhere. Templates such as navigation and logic for showing messages to the user is located here.
+
+\subsubsection{Compression}
+Since the number of CSS and Javscript files grows quickly, we are using the \texttt{Compress}\footnote{\url{https://github.com/django-compressor/django-compressor}} application for combining several static files into one. This way we are able to limit the number of static file requests, and optimize the page load time. Javscript files are also minified to reduce file size. 
+
+
+\subsection{Vote}
+The \texttt{vote} app is the most comprehensive app in the project. It holds all the logic for creating questions, registering votes, showing responses etc. The vote app lives under the REST full namespace \texttt{http://localhost/vote/...}. Except for the creation of rooms, every url that you can visit in the vote app requires a room primary key. In listing \ref{lst:urlpattern-for-room-edit} the primary key is the room id. The id is expressed as a regular expression with the name room, as specified within the brackets \texttt{<room>}. The name does not matter and could be anything, but for the sake of readability we have chosen room.
+
+\begin{lstlisting}[caption=URL Pattern for Room Edit, label=lst:urlpattern-for-room-edit]
+url(r'^room/(?P<room>[0-9]+)/edit/$', views.room_edit, name='room_edit')
+\end{lstlisting}
+
+
+\subsection{Models}
+The rooms (and any other entity that we have defined here) is expressed as a Django Model.  
+The models have fields defined, as well as methods. The room example in listing \ref{lst:room-model} has the fields owner, title, \texttt{date\_time} and \texttt{updated\_at} and some convenience methods.
+
+
+\begin{lstlisting}[caption=The Room Model, label=lst:room-model]
+class Room(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    date_time = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('owner', 'title')
+
+    def get_absolute_url(self):
+        return reverse('room_detail', kwargs={'pk': self.pk})
+
+    def has_questiongroups(self):
+        return len(self.questiongroup_set.all()) > 0
+
+    def has_open_questiongroups(self):
+        for questiongroup in self.questiongroup_set.all():
+            if questiongroup.is_open:
+                return True
+        return False
+
+    def total_subscribers(self):
+        return len(self.subscription_set.all())
+
+    def __str__(self):
+        return self.title
+\end{lstlisting}
+
+
+The owner is defined as a foreign key and represents a User relationship. In this case, a Room must belong to a User. The \texttt{date\_time} and \texttt{updated\_at} fields are automatically updated with the \texttt{auto\_now\_add} and \texttt{auto\_now} attributes set to \texttt{True}. The model also has a Meta class defined. In this case the it only defines the unique database keys, but it could contain more information.
+
+
+\subsection{Input sanitation}
+The voting app contains allot of user input. Each room has a name that is created by the user. The groups, questions and answers also relies heavily on user generated input. To prevent users from creating malicious input, we are sanitizing everything using Bleach. Bleach is a \emph{whitelist-based HTML sanitizing library that escapes or strips markup and attributes}\footnote{Retrieved on 2016-04-04\url{https://bleach.readthedocs.org/en/latest/}}. We are then capable of sanitizing input by calling the \texttt{clean} method on a Bleach instance. An example of using bleach in the project, can be found in the \texttt{question\_answer\_create} method as seen below:
+
+\begin{lstlisting}[caption=Using Bleach to sanitize input, label=lst:bleach]
+bleach.clean(new_question.question_text, tags=ALLOWED_TAGS)
+\end{lstlisting}
+
+The \texttt{ALLOWED\_TAGS} is the whitelist consisting of an array defined by us, that defines which tags are allowed and which are to be stripped/sanitized away. Since the system supports code input, it is important that the user is able to input fx. \texttt{<script>} tags. Obviously we do not want any of the users Javascript to be executed when the page loads, and Bleach helps us do this, by escaping the tags that are not whitelisted. 
+
+
+\subsection{Short URL's}
+To find a group it is necessary to know the URL. As a convenience, a url shortening feature is added to all groups using the \texttt{short\_url} library\footnote{\url{https://pypi.python.org/pypi/short_url}}. The url is not stored as persistent data, but simply generated on the fly. When a user makes a GET request to one of the shortened URL's the follwing method is hit.
+
+\begin{lstlisting}[caption=The URL redirect method, label=lst:url-redirect]
+@login_required
+def url_redirect(request, short):
+    group_id = short_url.decode_url(short)
+    group = get_object_or_404(QuestionGroup, pk=group_id)
+    return redirect(group)
+\end{lstlisting}
+
+The \texttt{short} parameter is the short key that is generated when a group is requested. Since we can decode it, it's possible to retrieve the group and redirect to it as shown in listing \ref{lst:url-redirect}.
+
+
+
+
+
+
+
+
+\subsection{Live updating of responses with Pusher}
+Whenever someone answers a question the immediate response can be seen live by the owner of the question at \texttt{.../question/<question-number>/responses/}. The graph will automatically update and display the current result. In order to show live updates on this page we use Pusher. Pusher is a service for sending and receiving live data easily\footnote{Retrieved on 2016-04-04 \url{https://pusher.com/}}.
+
+In order to use Pusher we create a channel to which we subscribe and binds an event to. This can be seen in \texttt{push.js} found in the vote app. The event that triggers Pusher is whenever someone answers a question. To tell Pusher, that there's a new event we trigger Pusher from the \texttt{answer\_response} view and provide it with the relevant data:
+
+\begin{lstlisting}[caption=Selected parts of the answer\_response view, label=lst:answer_response]
+        ...
+        myData = {
+            'total_responses': question_obj.total_responses(),
+            'labels': [a.answer_text for a in answer_set],
+            'series': [a.number_of_responses() for a in answer_set]
+        }
+        event = "response-%s%s%s" % (room, questiongroup, question)
+        get_pusher().trigger('crs', event, {'data': myData})
+    return redirect(qg)
+\end{lstlisting}
+
+The trigger at line 8 (in listing \ref{lst:answer_response}) is where the view tells Pusher that there's a new event. From here, Pusher tells all subscribers of the corresponding channel, \texttt{crs}, that there's a new event which we handle within \texttt{push.js}.
+
+In \texttt{push.js} we do the following to subscribe and handle the events sent by the view:
+
+\begin{lstlisting}[caption=Selected parts of push.js, label=lst:push.js]
+var channel = pusher.subscribe('crs');
+var event = $("#event:hidden").val();
+channel.bind(event, function(data) {
+    divs = $(".answer-box");
+    divs.each(function(index, value){
+        var answerId = parseInt($(value).attr('id'));
+        var answer_count = data.data[answerId] ? data.data[answerId].answer_count : 0;
+        $(value).text(answer_count);
+    });
+    $("#response-count").text(data.data.total_responses);
+    chart.update(data.data);
+});
+\end{lstlisting}
+
+These lines of JavaScript in listing \ref{lst:push.js} subscribes to events on the channel named \texttt{crs} and handles updates to the response page by getting the data from the event and displaying it in the chart besides updating the number of total responses.
+
+
 
 
