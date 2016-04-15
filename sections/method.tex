@@ -1,6 +1,160 @@
 \section{Method}
 
 
-\subsection{Online Ethnography}
 
+The idea of Classroom Responses Systems is not a new one. As mentioned, early analog versions of these systems where used where students simply raised a card with their answer \cite[p.~257]{stowell2007benefits}. Several examples of such systems in more moderns versions have been shown, and such we must determine where our system lies from a strategic standpoint. To find this out we have used our own interpretation of \emph{Porters Five Forces} \cite{porter1979competitive}.
+
+
+\subsection{Porters Five Forces}
+Figure \ref{fig:porter5forces} is a depiction of the model as it can be found in \citeA[p.~141]{porter1979competitive}. The model helps determine how competition can be seen as five forces. \emph{The threat of new entrants}, how new entrants to an industry have a desire to gain market share. \emph{The bargaining power of buyers}, 
+
+% Threat of New Entry
+% Supplier Power
+% Threat of Substitution
+% Buyer Power
+% CENTER: Competitive Rivalry
+% https://www.mindtools.com/pages/article/newTMC_08.htm
+
+
+
+
+
+\begin{figure}[H]
+
+\centering
+\begin{tikzpicture}
+[node distance = 1cm, auto,font=\footnotesize,
+% STYLES
+every node/.style={node distance=3cm},
+% The comment style is used to describe the characteristics of each force
+comment/.style={rectangle, inner sep= 5pt, text width=4cm, node distance=0.25cm, font=\scriptsize\sffamily},
+% The force style is used to draw the forces' name
+force/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}] 
+
+% Draw forces
+\node [force] (rivalry) {Rivalry among existing competitors};
+\node [force, above of=rivalry] (substitutes) {Threat of substitutes};
+%\node [force, text width=3cm, dashed, left=1cm of substitutes] (state) {Public policies};
+\node [force, left=1cm of rivalry] (suppliers) {Bargaining power of suppliers};
+\node [force, right=1cm of rivalry] (users) {Bargaining power of users};
+\node [force, below of=rivalry] (entrants) {Threat of new entrants};
+
+%%%%%%%%%%%%%%%
+% Change data from here
+
+% RIVALRY
+\node [comment, below=0.25 of rivalry] (comment-rivalry) {
+%(+) A war against Microsoft\\
+%(+) Limiting sunk costs\\
+%(+) Coopetition
+};
+
+% SUPPLIERS
+\node [comment, below=0.25cm of suppliers] {
+%(+) Efficiency\\
+%(+) Attracting other developers\\
+%(+) Creating a Chrome community
+};
+
+% SUBSTITUTES
+\node [comment, right=0.25 of substitutes] {
+%(+) Portability
+};
+
+% USERS
+\node [comment, below=0.25 of users] {
+%(+) Increasing the user information\\
+%(+) Reducing the switching costs
+};
+
+% NEW ENTRANTS
+\node [comment, right=0.25 of entrants] {
+%(+) EC vs. Microsoft
+};
+
+% PUBLIC POLICIES
+%\node [comment, text width=3cm, below=0.25 of state] {
+%(+) Positively framed\\
+%(+) Transparency\\
+%(--) A new monopoly?
+%};
+
+%%%%%%%%%%%%%%%%
+
+% Draw the links between forces
+\path[->,thick] 
+(substitutes) edge (rivalry)
+(suppliers) edge (rivalry)
+(users) edge (rivalry)
+(entrants) edge (comment-rivalry);
+
+\end{tikzpicture} 
+\caption{Porters Five Forces }\label{fig:porter5forces}
+\end{figure}
+
+
+
+ 
+
+
+ 
+\subsubsection{Threat of new entrants}
+\subsubsection{Bargaining power og buyers}
+\subsubsection{Bargaining power og suppliers}
+\subsubsection{Threat of substitute products or services}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Questionnaire} % Field testing the system with quantitative and some qualitative data
+% Likert scale
+% Spørgsmål - se bog. Structured format (i form af at spørgsmålene ikke bliver spurgt af os, men står på tekst (spørgeskema). Likert skala, 1-9. (Find artikel)
+% Open ended spørgsmål til at slutte af med - kvalitativ data som vi vil bruge til ?? i analysen.
+
+Pretest:
+Spørg ind til hvordan de studerende har det med at deltage i undervisning
+
+Implementation:
+Brug CRSFIT i undervisningen
+
+Posttest:
+Hvordan har de det nu med at deltage?
+
+Qualitative data collection:
+Open-ended spørgsmål (indbygget i posttest spørgeskema)
+
+T-test i stedet for chi-square fordi T-test ikke kræver 5 svar i hver celle for at kunne bruges.
+
+T-test for 'dependent samples'/'correlated samples' hvor man "eksperimenterer" og sammenligner før og efter - præcis som vi har tænkt os at gøre.
+
+Side 110!!!
+
+Null hyptohesis: "Der er ingen forskel mellem ... "
+
+Vi har et two-way relationship mellem de spørgsmål der er identiske (cross-tabulation og correlation)
+
+
+\subsection{Test of CRSFIT and design of the test}
+We have designed a test in order to tell whether or not our solution can have an impact on teaching classes that covers teaching programming and mathematics. The test is highly inspired by \cite{siau2006use} and their work.
+
+The test is designed to tell whether or not we are able to move peoples attitude towards engagement, interactivity and participation during class. \citeA{siau2006use} defined a test design consisting of a \emph{pretest}, \emph{implementation} of the system in a class and a \emph{posttest} followed up by a \emph{qualitative data collection} doing exactly this. Our test is structured in the same way and we are asking very similar questions in the different parts of the test as well.
+
+By having a pretest and a posttest asking the same questions we'll be able to compare the results and measure whether or not we are able to move peoples attitude. The pretest consists of two parts which are asking about individual interactivity and general interactivity in the class.
+
+
+
+\subsection{Test i Peters undervisning}
+\todo{Husk at sige vi mere eller mindre har kopieret en anden artikel (Use of a classroom response system to enhance classroom interaction)}
 

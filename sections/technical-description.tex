@@ -8,12 +8,12 @@ Before describing the system, we will give a brief explanation of the technologi
 \subsection{Technologies}
 
 The system is implemented as a web application using the Python programming language and the Django web framework. For data storage we are using a MySQL database.
-For development purposes we are using \texttt{virtualenv}, a plugin that allows virtual python environments.
+For development purposes we are using \texttt{virtualenv}, a plugin that allows virtual python environments. This section will describe 
 
 \subsubsection{Django web framework}
 We have chosen the Django web framework to build the system. Django is an open-source web framework build with Python. We are using Django version 1.9.1 which was the latest release when we started developing the system.
 
-Django uses the Model-View-Controller (MVC) pattern to structure a project. \emph{Models} are the objects in the project. Models are translated into tables in the database, and that's why writing a model is similar to creating tables in a SQL database. E.g., the following model defines \emph{Room}: 
+Django uses the Model-View-Controller (MVC) pattern to structure projects. \emph{Models} are the objects in the project. Models are translated into tables in the database, and that's why writing a model is similar to creating tables in a SQL database. E.g., the following model defines \emph{Room}: 
 
 \begin{lstlisting}[caption=The Room Class, label=lst:room-class]
 class Room(models.Model):
@@ -76,7 +76,7 @@ We could have chosen a different database for the system such as PostgreSQL. Thi
 \subsubsection{Python, virtualenv and external packages}
 For developing we are using a virtual environment created with \texttt{virtualenv} to handle the required packages and their versions for the project. The environment also specifies which version of Python is used (3.5.1). The environment only lives when it's activated and when deactivated Python and all version of all packages are set to the system default. The packages only installed within the environment will not be available on the system when the environment is deactivated. 
 
-We've used an amount of external packages for creating this project, which can also be found in \texttt{requirements.txt}. Within this document we specify which version we are using unless it's the newest one. A full list is shown below:
+We've used an amount of external packages for creating this project, which can be found in \texttt{requirements.txt}. Within this document we specify which version we are using. When omitting this number, the newest one is used. A full list is shown below:
 
 \begin{itemize}
     \item mysqlclient
