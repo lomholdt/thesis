@@ -6,7 +6,9 @@ The idea of Classroom Responses Systems is not a new one. As mentioned, early an
 
 
 \subsection{Porters Five Forces}
-Figure \ref{fig:porter5forces} is a depiction of the model as it can be found in \citeA[p.~141]{porter1979competitive}. The model helps determine how competition can be seen as five forces. \emph{The threat of new entrants}, how new entrants to an industry have a desire to gain market share. \emph{The bargaining power of buyers}, 
+The model shows how competition can be seen as five forces. 
+
+\emph{The threat of new entrants}, how new entrants to an industry have a desire to gain market share. \emph{The bargaining power of suppliers}, the dynamics of suppliers changing prices and capturing more value for themselves. \emph{The bargaining power of buyers}, the fact that buyers can demand more value by forcing down prices or wanting better quality. \emph{The threat of substitues}, other products on the market offering the same or better products by different means. For example using LearnIT's native question feature instead of using a dedicated CRS. And finally, the fact that other systems compete for market share already, introducing new features or discounted pricings. Figure \ref{fig:porter5forces} shows a depiction of the model as it is explained in \citeA[p.~141]{porter1979competitive}. 
 
 % Threat of New Entry
 % Supplier Power
@@ -14,10 +16,6 @@ Figure \ref{fig:porter5forces} is a depiction of the model as it can be found in
 % Buyer Power
 % CENTER: Competitive Rivalry
 % https://www.mindtools.com/pages/article/newTMC_08.htm
-
-
-
-
 
 \begin{figure}[H]
 
@@ -93,17 +91,36 @@ force/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, tex
 \end{figure}
 
 
+All forces must be taken into consideration when evaluating the strategic position to ensure our systems sustainability\todo{Find other word for this?} in a challenging market. 
+In the following section we will determine how these forces can be interpreted against our system, and essentially our strategy.
 
- 
+The amount of fully digital CRS systems are manifold. The ones that we mention here is merely the ones that we were able to find by during our research. Arguably there might me more, but we will only be concerned about the ones mentioned here. 
 
 
- 
 \subsubsection{Threat of new entrants}
-\subsubsection{Bargaining power og buyers}
-\subsubsection{Bargaining power og suppliers}
+We will primarily be focusing on the the seven entry barriers, that incumbents have relative to new entrants, as explained by \citeA{porter2008five}, in relation to our own system.
+
+
+The first barrier is \emph{supply-side economies of scale}. Essentially it covers the fact that the larger volumes, creates lower cost per unit. This is essentially true, due to the fact that a unit in our sense is users, and our cost per unit is server maintenance cost, the more users, the more servers but also spread fixed costs. For entrants though, the cost can be low and may simply scale as the business expands.
+
+The \emph{demand-side benefits of scale}, is the fact that users might have increased willingness to buy a product if other buyers patronize the company. Users may also value being part of a bigger \emph{network}, thus this barrier is also known as the \emph{network effect} \cite[p.~81]{porter2008five}. It's hard to counter the fact that a huge volume will have a positive effect on almost any platform, but in general with CRS systems, it would seem plausible that systems are chosen based on user needs. This leads us naturally towards the third barrier \emph{customer switching costs}. The name is mostly selfexplanatory, but this barrier regards the switching cost to a new system. If we only consider web based systems, which most of the modern ones are, most users does not have any deep data affiliation with the systems, so switching comes at almost no cost. For entrants this is very positive. Given that gaining traction on such a market is very much possible if the system is feature competitive.
+
+\emph{Capital requirements} consider the fact that th \emph{"need to invest large financial resources in order to compete can deter new entrants"} \cite[p.~81]{porter2008five}. In the case of CRS, it should be possible to build such a system without great capital requirements. In fact a working prototype can be made ready very quickly, as our example shows, thou this is also a threat once you are in the market, potential entrants can be plentiful.
+
+\emph{Incumbency advantages independent of size} take into consideration the fact, that almost any incumbents has the advantage of already being available on the market \cite[p.~81]{porter2008five}. Simply put, being first can have potential advantages. Even though this might seem obvious, it is important to remember while analysing the CRS market. It would seem that many have tried (referring to the many systems mentioned here), and many also appears well established, but none seem to be dominant and.
+
+Entrants and incumbents might have \emph{unequal access to distribution channels}. For entrants, distribution channels must be secured in order to be able to displace others from the market. While dealing with non-physical products, and in this case dealing with software where the "shelf space" is unlimited, the distribution channels  comes down to marketing of the product. Everybody has equal ability to market their product (online for example), but here the capital requirements might come in to play, since marketing can be a costly affair, and the distribution channels depend on it.
+
+The final barrier is \emph{restrictive government policy}. It concerns the fact that the government might have direct influence on whether you will be able to even become an entrant on the market \cite[p.~82]{porter2008five}. Gathering potential licenses or other restrictions that might apply from a government level should be considered. While handling digital systems, laws governing privacy and data security should also be dealt with, though most CRS does not handle much user data beside an email or username and a password which is also the case in our system.
+
+
+\subsubsection{Bargaining power of suppliers}
+The next force is the \emph{bargaining power of suppliers}. This is concerned with the fact that 
+
 \subsubsection{Threat of substitute products or services}
 
 
+\subsubsection{Bargaining power of buyers}
 
 
 
@@ -118,43 +135,53 @@ force/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, tex
 
 
 
-\subsection{Questionnaire} % Field testing the system with quantitative and some qualitative data
-% Likert scale
-% Spørgsmål - se bog. Structured format (i form af at spørgsmålene ikke bliver spurgt af os, men står på tekst (spørgeskema). Likert skala, 1-9. (Find artikel)
-% Open ended spørgsmål til at slutte af med - kvalitativ data som vi vil bruge til ?? i analysen.
 
-Pretest:
-Spørg ind til hvordan de studerende har det med at deltage i undervisning
 
-Implementation:
-Brug CRSFIT i undervisningen
-
-Posttest:
-Hvordan har de det nu med at deltage?
-
-Qualitative data collection:
-Open-ended spørgsmål (indbygget i posttest spørgeskema)
-
-T-test i stedet for chi-square fordi T-test ikke kræver 5 svar i hver celle for at kunne bruges.
-
-T-test for 'dependent samples'/'correlated samples' hvor man "eksperimenterer" og sammenligner før og efter - præcis som vi har tænkt os at gøre.
-
-Side 110!!!
-
-Null hyptohesis: "Der er ingen forskel mellem ... "
-
-Vi har et two-way relationship mellem de spørgsmål der er identiske (cross-tabulation og correlation)
 
 
 \subsection{Test of CRSFIT and design of the test}
 We have designed a test in order to tell whether or not our solution can have an impact on teaching classes that covers teaching programming and mathematics. The test is highly inspired by \cite{siau2006use} and their work.
 
-The test is designed to tell whether or not we are able to move peoples attitude towards engagement, interactivity and participation during class. \citeA{siau2006use} defined a test design consisting of a \emph{pretest}, \emph{implementation} of the system in a class and a \emph{posttest} followed up by a \emph{qualitative data collection} doing exactly this. Our test is structured in the same way and we are asking very similar questions in the different parts of the test as well.
+The test is designed to tell whether or not we are able to move peoples behaviour, beliefs and attitude towards engagement, interactivity and participation during class. \citeA{siau2006use} defined a test design consisting of a \emph{pretest}, \emph{implementation} of the system in a class and a \emph{posttest} followed up by a \emph{qualitative data collection} doing exactly this. Our test is structured in the same way and we are asking similar questions in the different parts of the test as well. The whole test should preferably be carried out over a whole semester, but due to the limited time of this project the test will be carried out in a single lecture. The pretest and posttest are made as questionnaires. 
 
-By having a pretest and a posttest asking the same questions we'll be able to compare the results and measure whether or not we are able to move peoples attitude. The pretest consists of two parts which are asking about individual interactivity and general interactivity in the class.
+By having a pretest and a posttest asking the same questions we'll be able to compare the results and measure whether or not we are able to move peoples attitude. The pretest consists of two parts which are asking about individual interactivity and general interactivity in the class. We are asking people to answer on a Likert scale from \todo{INSERT REF TO LIKERT SCALE SOMETHING!} 1-9 where 1 is \emph{Strongly disagree} and 9 is \emph{Strongly agree}. The questions in the first part of the pretest (individual) are formulated as statements such as \emph{"I am engaged in class."} and \emph{"I provide my opinion to questions from the teacher during the class."}. In the second part of the pretest (general) we will ask students to answer similar statements such as \emph{"Students participate in class discussion."} and \emph{"Students receive feedback in class on their understanding of the course materials."}. The pretest should be answered by students before or in the beginning of the given lecture in which the test is carried out. \todo{Smid det i appendix?}See \url{https://docs.google.com/forms/d/1Yv3HKuvZYB-y560yfxCAaFkT3WifR7-tyLxM5T5-Zds/edit?usp=forms_home} for a complete version of the pretest questionnaire.
+
+During the lecture, we will ask students questions relevant to their class with our solution, CRSFIT. This part of the test is the \emph{implementation}. Students will answer these questions anonymously and they will not be held accountable for their answers. The purpose of this part of the test is to 1) tell if students actually benefit from using the system and overall find it useful and 2) test our solution in a real setting. It requires training and experience to get the most out of a classroom response system. The literature about how to use response systems in a beneficial way has developed alongside with the research of the implementation of response system in classrooms. For example, see: \todo{Insert refs til gode best practices og litteratur om hvordan man bruger response systems på en god måde - det findes!}. Therefore we will help creating questions which can be asked during the lecture in which we carry out our test.
+
+In the posttest questionnaire we will ask students to answer the same questions as in the pretest questionnaire in order to tell if they feel different about their individual interactivity and the general interactivity in the class. Furthermore, we will ask students about the ease of use of CRSFIT and the perceived usefulness. The \emph{ease of use} is included in order to get feedback on how easy the system is to use. This should give us a clear impression since no participants have seen or used the system prior to the test. The \emph{perceived usefulness} asks into the idea of the system with statements like \emph{"Using the system makes it easier for me to interact in the class."} to be rated. Included in the posttest questionnaire is also an open ended question in which we ask students to give their opinion about advantages and disadvantages of using a classroom response system. This is the qualitative part of the test. This part serves to give us an idea about if there are areas that this kind of system does particular good or bad. See \todo{Skal vi sætte questionniares der?}appendix for a complete version of the posttest questionnaire \url{https://docs.google.com/forms/d/11sFvs0KxJDjmQEPkiTqlxrHp3PCHWcmUzCoXrhAMDzU/edit?usp=forms_home}. 
 
 
 
-\subsection{Test i Peters undervisning}
-\todo{Husk at sige vi mere eller mindre har kopieret en anden artikel (Use of a classroom response system to enhance classroom interaction)}
 
+\todo{Find på en fed overskrift}\subsubsection{Questionnaires and something about T-test} % Field testing the system with quantitative and some qualitative data
+% Likert scale
+% Spørgsmål - se bog. Structured format (i form af at spørgsmålene ikke bliver spurgt af os, men står på tekst (spørgeskema). Likert skala, 1-9. (Find artikel)
+% Open ended spørgsmål til at slutte af med - kvalitativ data som vi vil bruge til ?? i analysen.
+The pretest and the posttest are designed as questionnaires. Questionnaires makes the least demands on personal and social skills of the questioner \cite[p.~74]{deacon2007researching} and makes us able to measure the results. The questionnaires are to be answered online with Google Forms. Our way of asking the questions are highly structured since they are written down and asked in a survey the exact same way to all respondents \cite[p.~65]{deacon2007researching}.
+
+When asking questions in a questionnaire (or in general) the questioner should be aware which type of questions are asked. What do the question seek to find information about? \citeA[pp.~80-84]{dillman1978mail} lists four types of questions which are asking into either \emph{behaviour}, \emph{beliefs}, \emph{attitudes} or \emph{attributes}. With our questions we are interested in behaviour, beliefs and attitudes. We are not focusing on attributes. Questions asking into attributes are concerned about background information about the respondent such as age, gender etc \cite[p.~75]{deacon2007researching}. While these questions typically are easy to answer, they are of no interest to us. They are often used to say something about a group of people you don't know and are of most use in very large samples. Our questions are interested in behaviour when we ask student to rate statements such as \emph{"I interact with the teacher in class."} and beliefs (\emph{"Students receive feedback from the teacher during the class."}) and attitudes \todo{Er det rigtigt?}(\emph{"I find the system useful in enhancing my interaction in the class."}).
+
+T-test.
+
+
+% Pretest:
+% Spørg ind til hvordan de studerende har det med at deltage i undervisning
+
+% Implementation:
+% Brug CRSFIT i undervisningen
+
+% Posttest:
+% Hvordan har de det nu med at deltage?
+
+% Qualitative data collection:
+% Open-ended spørgsmål (indbygget i posttest spørgeskema)
+
+% T-test i stedet for chi-square fordi T-test ikke kræver 5 svar i hver celle for at kunne bruges.
+
+% T-test for 'dependent samples'/'correlated samples' hvor man "eksperimenterer" og sammenligner før og efter - præcis som vi har tænkt os at gøre.
+
+% Side 110!!!
+
+% Null hyptohesis: "Der er ingen forskel mellem ... "
+
+% Vi har et two-way relationship mellem de spørgsmål der er identiske (cross-tabulation og correlation)
