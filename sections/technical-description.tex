@@ -1,19 +1,18 @@
-\section{Technical description}
-The system can be described as a Classroom Response System (CRS) in the sense that it's a system made for polling and gathering responses in a classroom.
+\subsection{Technical description}
+%The system can be described as a Classroom Response System (CRS) in the sense that it's a system made for polling and gathering responses in a classroom.
 
-The system includes features that support asking and answering technical questions\footnote{Here we've defined technical questions as questions that can display formatted code and mathematical expressions.}. In order to do so we've implemented libraries made by others. They will be described in detail in the following sections.
+
+The following section will provide a technical description of the system and how it's made. The section will include examples of code describing different parts of the system and an outline the structure of the project and describe how we store data. Furthermore, we will include descriptions of different parts of the system and the libraries and third-parties they rely on. In the end, we will explain how the system is deployed to the web.
 
 Before describing the system, we will give a brief explanation of the technologies behind.
 
-\subsection{Technologies}
-
 The system is implemented as a web application using the Python programming language and the Django web framework. For data storage we are using a MySQL database.
-For development purposes we are using \texttt{virtualenv}, a plugin that allows virtual python environments. This section will describe 
+For development purposes we are using \texttt{virtualenv}, a plugin that allows virtual python environments. The following sections will describe all of these parts and a few more in detail below.
 
-\subsubsection{Django web framework}
+\subsubsection*{Django web framework}
 We have chosen the Django web framework to build the system. Django is an open-source web framework build with Python. We are using Django version 1.9.1 which was the latest release when we started developing the system.
 
-Django uses the Model-View-Controller (MVC) pattern to structure projects. \emph{Models} are the objects in the project. Models are translated into tables in the database, and that's why writing a model is similar to creating tables in a SQL database. E.g., the following model defines \emph{Room}: 
+Django uses the \emph{Model-View-Controller} (\emph{MVC}) pattern to structure projects. \emph{Models} are the objects in the project. Models are translated into tables in the database, and that's why writing a model is similar to creating tables in a SQL database. E.g., the following model defines \emph{Room}: 
 
 \begin{lstlisting}[caption=The Room Class, label=lst:room-class]
 class Room(models.Model):
@@ -25,7 +24,6 @@ class Room(models.Model):
     def function_name(self):
         # do stuff
 \end{lstlisting}
-
 It's possible to define functions which belongs to a specific model as seen above. The Room model has several functions. One of these functions returns the number of subscribers and looks like this:
 
 \begin{lstlisting}[caption=The total subscribers method, label=lst:total-subscribers-method]
@@ -44,7 +42,6 @@ def room_edit(request, room):
     context = {'room': room, 'form': VoteRoomForm(instance=room)}
     return render(request, 'vote/room_edit.html', context)
 \end{lstlisting}
-
 This view checks if the room exists and then whether or not the requester is the owner of the room. Depending on this result, the requester is either redirected to the room he/she is trying to edit or the requester is shown the edit page of a room. The provided context in the template can be found in the context variable. Templates is what gets rendered and shown in the browser. Templates are mainly normal HTML and CSS. Within a template it's possible to use Django's template language to access the context provided by the view. 
 
 A \emph{controller} is also found within each Django app. It's defined in the \texttt{urls.py} file where a regular expression is matching and directing URL requests to different views. Parts of an \texttt{url.py} file can be seen here:
@@ -60,23 +57,24 @@ urlpatterns = [
     ...
     ]
 \end{lstlisting}
-
 Each requested URL from the system is being matched with one of these regular expressions which in return directs to a \emph{view}. Where the URL says \texttt{?P<room>[0-9]+}, the regular expression matches any number combination with room id's.
 
 % Beside using many of Django's features, we also do use an amount of external Python libraries. A full list can be found in \texttt{requirements.txt}.
 
-\subsubsection{Data storage}
-We have chosen a MySQL database for our data storage. Within Django's settings file for the project (\texttt{settings.py} in the main app) we specify which drivers and correct information to login to the database with. From here, Django handles all the creating and updating in the database. For example, the models specified in each app are automatically created and updated without the necessity for us to write tables directly in the database. 
+\subsubsection*{Data storage}
+We have chosen a MySQL database for our data storage. Within Django's settings file for the project (\texttt{settings.py} in the main app) we specify which drivers and correct login information to the database. From here, Django handles all the writing and reading to and from the database using Djangos own ORM. For example, the models specified in each app handles all the direct database interaction, exposing only methods needed to perform these actions. This also enables us to easily handle other databases like Postgres, since we are only being specific to Django, and not to any specific database.
 
 Every time an object is created, changed or deleted (an user, a question, an answer etc.) Django handles transactions and communication with the database. This makes a third party ORM (Object-relational mapping) service unnecessary. An ORM is typically a third party service which is sometimes paid for and takes time to integrate with the chosen framework. A short discussion of this problem can be found in the article by \citeA{johnson2005j2ee} where he highlights some of the history of Java's integration with ORM's.
 
 We could have chosen a different database for the system such as PostgreSQL. This would only require us to add another database to the before mentioned settings, tell Django to migrate and remove the old database from the settings when done. This is convenient for changing the database at a later point if it should be necessary.
 
+\subsubsection*{Caching}
+To prevent our database from being hit too often we have added caching to the site. In this case we are using Memcached\footnote{\url{https://memcached.org/}}. We are primarily caching the static pages on the site, and the search results. This way common search queries will not hit the database so often. For testing purposes this is not overly important, but we do wish to be prepared with a robust and scalable infrastructure.
 
-\subsubsection{Python, virtualenv and external packages}
-For developing we are using a virtual environment created with \texttt{virtualenv} to handle the required packages and their versions for the project. The environment also specifies which version of Python is used (3.5.1). The environment only lives when it's activated and when deactivated Python and all version of all packages are set to the system default. The packages only installed within the environment will not be available on the system when the environment is deactivated. 
+\subsubsection*{Python, virtualenv and external packages}
+For development we are using a virtual environment created with \texttt{virtualenv} to handle the required packages and their versions for the project. The environment also specifies which version of Python is used (3.5.1). The environment only lives when it's activated and when deactivated, the Python version is set back to point to the systems default. The packages only installed within the environment will not be available on the system when the environment is deactivated. 
 
-We've used an amount of external packages for creating this project, which can be found in \texttt{requirements.txt}. Within this document we specify which version we are using. A full list is shown in figure \ref{lst:requirements}.
+We've used an amount of external packages for creating this project, which can be found in \texttt{requirements.txt}. Within this document we specify which version we are using. A full list is shown in listing \ref{lst:requirements}.
 
 \begin{lstlisting}[caption=The requirements.txt file. A omitted version number means the newest one is used., label=lst:requirements]
     mysqlclient
@@ -87,14 +85,15 @@ We've used an amount of external packages for creating this project, which can b
     django-super-inlines
     pusher
     bleach
-    django\_compressor
-    short\_url
+    django_compressor
+    short_url
+    python-memcached
 \end{lstlisting}
 
 All packages are installed by running the command \texttt{pip install -r requirements.txt} from within the virtual environment. A detailed description of selected packages are given in this section according to where in the system they are used.
 
-\subsection{Project Structure}
-The structure of the project can be seen below. Folders are indicated by a trailing backslash. The project itself is called CRS and is located at the root of the structure. All the folders shown in the CRS folder are Django applications (app). An app in Django-terminology is a separate part of the system, that \emph{"[...] describes a Python package that provides some set of features"}\footnote{Retrieved on 2016-04-01, \url{https://docs.djangoproject.com/en/1.9/ref/applications/\#projects-and-applications}}. The vote folder is expanded to show the underlying structure, as an example of an application structue.
+\subsubsection*{Project Structure}
+The structure of the project can be seen below. Folders are indicated by a trailing backslash. The project itself is called CRS and is located at the root of the structure. All the folders shown in the CRS folder are Django applications (app). An app in Django-terminology is a separate part of the system, that \emph{“... describes a Python package that provides some set of features."}\footnote{Retrieved on 2016-04-01, \url{https://docs.djangoproject.com/en/1.9/ref/applications/\#projects-and-applications}}. The vote folder is expanded to show the underlying structure, as an example of an application structue.
 
 \begin{figure}[H]
     \dirtree{%
@@ -129,7 +128,7 @@ The structure of the project can be seen below. Folders are indicated by a trail
 The CRS project consists of five applications. \texttt{authentication}, \texttt{dashboard}, \texttt{home}, \texttt{main} and \texttt{vote}. Each is responsible for their own part of the CRS service, and their names are supposed to be self explanatory to a certain extend, after a proper introduction.
 
 % Basic feature
-\subsection{Authentication}
+\subsubsection*{Authentication}
 The \texttt{authentication} app is responsible for all the application's authentication logic. This includes logging in users, logging them out, signing up and resetting passwords.
 
 It's necessary to register and sign in with personal credentials (username and password) in order to use the system. Anyone can register for an account from the frontpage or from the login page.
@@ -158,28 +157,28 @@ class CustomUserCreationForm(UserCreationForm):
 
 The email is crucial for resetting passwords, otherwise the account will be lost if a user forgets his/her password. The whole process is handled by Django as long as we provide a mail back-end which is specified in the \texttt{settings.py} file found in the main app. In order to send emails we use the external service Mailgun\footnote{Retrieved on 2016-04-04: \url{https://www.mailgun.com/}}, which sends email on behalf of the system. Whenever a user requests to reset a password, an email with a unique link is sent to the users email address. The link is automatically created by Django and could look like \texttt{.../authentication/reset/MTY/4as-663c1494cfc7b061c25d/}. This links directs to a page from where the user can enter a new password.
 
-\subsection{Dashboard}
+\subsubsection*{Dashboard}
 The \texttt{dashboard} app is responsible for handling the users backend. When a user logs in, they are presented with a personal dashboard that shows a variety of information, relevant for that user.
 The dashboard contains information about which rooms the user is subscribed to and information about the rooms the user owns. It's possible to create new rooms directly from the dashboard. The search endpoint is also registered within the dashboard app. Searching is added as a convenience feature for the first iteration og the project and is not meant for production use. A full text search feature using a search engine like Solr or Elasticsearch would be preferable, but since it will not add any direct value to answering our research question, it is currently implemented as a simple database lookup on room names for now.
 
-\subsection{Home} \todo{Tilføj mere lækkert til home beskrivelsen}
-The \texttt{home} app handles all static pages, like the frontpage and also the user profile pages.
-All pages related to a home area is located within the home app. Also, the short-URL feature found in groups is handled from within the \texttt{home} app.
+\subsubsection*{Home} \todo{Tilføj mere lækkert til home beskrivelsen}
+The \texttt{home} app handles static pages like the front page and also the user profile pages.
+All pages related to a home area is located within the home app. Also, the short-URL feature found in groups is handled from within the \texttt{home} app. Examples of common pages that could be created here is an 'About Us' page, an FAQ etc.
 
-\subsection{Main}
+\subsubsection*{Main}
 The \texttt{main} app is special, as it is the \emph{root} app in the project. It contains the \texttt{settings.py} file, which is global for all applications. It is also where generic templates are located, such as the \texttt{base.html} file, that contains the main html structure of all pages throughout the site. Here we are able to include static asset files such as javascript, css and metatags that should be included everywhere. Templates such as navigation and logic for showing messages to the user is located here.
 
 %\subsubsection*{Compression}
 %Since the number of CSS and Javscript files grows quickly, we are using the \texttt{Compress}\footnote{\url{https://github.com/django-compressor/django-compressor}} application for combining several static files into one. This way we are able to limit the number of static file requests, and optimize the page load time. Javscript files are also minified to reduce file size. 
 
-\subsection{Vote}
+\subsubsection*{Vote}
 The \texttt{vote} app is the most comprehensive app in the project. It holds all the logic for creating questions, registering votes, showing responses etc. The vote app lives under the REST full namespace \texttt{http://localhost/vote/...}. Except for the creation of rooms, every url that you can visit in the vote app requires a room primary key. In listing \ref{lst:urlpattern-for-room-edit} the primary key is the room id. The id is expressed as a regular expression with the name room, as specified within the brackets \texttt{<room>}. The name does not matter and could be anything, but for the sake of readability we have chosen room.
 
 \begin{lstlisting}[caption=URL Pattern for Room Edit, label=lst:urlpattern-for-room-edit]
 url(r'^room/(?P<room>[0-9]+)/edit/$', views.room_edit, name='room_edit')
 \end{lstlisting}
 
-\subsection{Models}
+\subsubsection*{Models}
 The rooms (and any other entity that we have defined here) is expressed as a Django Model.  
 The models have fields defined, as well as methods. The room example in listing \ref{lst:room-model} has the fields owner, title, \texttt{date\_time} and \texttt{updated\_at} and some convenience methods.
 
@@ -214,16 +213,17 @@ class Room(models.Model):
 
 The owner is defined as a foreign key and represents a User relationship. In this case, a Room must belong to a User. The \texttt{date\_time} and \texttt{updated\_at} fields are automatically updated with the \texttt{auto\_now\_add} and \texttt{auto\_now} attributes set to \texttt{True}. The model also has a Meta class defined. In this case the it only defines the unique database keys, but it could contain more information.
 
-\subsection*{Input sanitation}
-The voting app contains allot of user input. Each room has a name that is created by the user. The groups, questions and answers also relies heavily on user generated input. To prevent users from creating malicious input, we are sanitizing everything using Bleach. Bleach is a \emph{whitelist-based HTML sanitizing library that escapes or strips markup and attributes}\footnote{Retrieved on 2016-04-04\url{https://bleach.readthedocs.org/en/latest/}}. We are then capable of sanitizing input by calling the \texttt{clean} method on a Bleach instance. An example of using bleach in the project, can be found in the \texttt{question\_answer\_create} method as seen below:
+\subsubsection*{Input sanitation}
+The voting app contains a lot of user input. Each room has a name that is created by the user. The groups, questions and answers also relies heavily on user generated input. To prevent users from creating malicious input, we are sanitizing everything using Bleach on the server side. Bleach is a \emph{"... whitelist-based HTML sanitizing library that escapes or strips markup and attributes."}\footnote{Retrieved on 2016-04-04\url{https://bleach.readthedocs.org/en/latest/}}. We are then capable of sanitizing input by calling the \texttt{clean} method on a Bleach instance. An example of using bleach in the project, can be found in the \texttt{question\_answer\_create} method as seen below:
 
 \begin{lstlisting}[caption=Using Bleach to sanitize input, label=lst:bleach]
 bleach.clean(new_question.question_text, tags=ALLOWED_TAGS)
 \end{lstlisting}
 
-The \texttt{ALLOWED\_TAGS} is the whitelist consisting of an array defined by us, that defines which tags are allowed and which are to be stripped/sanitized away. Since the system supports code input, it is important that the user is able to input fx. \texttt{<script>} tags. Obviously we do not want any of the users Javascript to be executed when the page loads, and Bleach helps us do this, by escaping the tags that are not whitelisted. 
+The \texttt{ALLOWED\_TAGS} is the whitelist consisting of an array defined by us, that defines which tags are allowed and which are to be stripped/sanitized away. Since the system supports code input, it is important that the user is able to input fx. \texttt{<script>} tags. Obviously we do not want any of the users JavaScript to be executed when the page loads, and Bleach helps us do this, by escaping the tags that are not white listed.
+The current version of the CRSFIT application does not have any client side validation. The server side validation is the most important for keeping our data safe, where the client side validation is good for usability and potentially lowering the amount of invalid data posted to the server. 
 
-\subsection*{Short URL}
+\subsubsection*{Short URL}
 To find a group it is necessary to know the URL. As a convenience, a url shortening feature is added to all groups using the \texttt{short\_url} library\footnote{\url{https://pypi.python.org/pypi/short_url}}. The url is not stored as persistent data, but simply generated on the fly. When a user makes a GET request to one of the shortened URL's the follwing method is hit.
 
 \begin{lstlisting}[caption=The URL redirect method, label=lst:url-redirect]
@@ -236,10 +236,11 @@ def url_redirect(request, short):
 
 The \texttt{short} parameter is the short key that is generated when a group is requested. Since we can decode it, it's possible to retrieve the group and redirect to it as shown in listing \ref{lst:url-redirect}.
 
-\subsection*{Live updates}
+\subsubsection*{Live updates}
 Whenever someone answers a question the immediate response can be seen live by the owner of the question at \texttt{.../question/<question-number>/responses/}. The graph will automatically update and display the current result. In order to show live updates on this page we use Pusher. Pusher is a service for sending and receiving live data easily\footnote{Retrieved on 2016-04-04 \url{https://pusher.com/}}.
 
-In order to use Pusher we create a channel to which we subscribe and binds an event to. This can be seen in \texttt{push.js} found in the vote app. The event that triggers Pusher is whenever someone answers a question. To tell Pusher, that there's a new event we trigger Pusher from the \texttt{answer\_response} view and provide it with the relevant data:
+
+In order to use Pusher we create a channel to which we subscribe and bind an event to. This can be seen in \texttt{push.js} found in the vote app. The event that triggers Pusher is whenever someone answers a question. To tell Pusher, that there's a new event we trigger Pusher from the \texttt{answer\_response} view and provide it with the relevant data:
 
 \begin{lstlisting}[caption=Selected parts of the answer\_response view, label=lst:answer_response]
         ...
@@ -271,8 +272,74 @@ channel.bind(event, function(data) {
     chart.update(data.data);
 });
 \end{lstlisting}
-
 These lines of JavaScript in listing \ref{lst:push.js} subscribes to events on the channel named \texttt{crs} and handles updates to the response page by getting the data from the event and displaying it in the chart besides updating the number of total responses.
 
-\subsection{Stack}
-\todo{Vi skal da have en oversigt over hvordan det er sat op på amazon med database server, S3 for static files osv. Tænkte jeg godt på :) Det kan vi jo sagtens, så kan vi bruge lidt fra Scalability faget OMG}
+\subsubsection*{Deployment}
+%\todo{Vi skal da have en oversigt over hvordan det er sat op på amazon med database server, S3 for static files osv. Tænkte jeg godt på :) Det kan vi jo sagtens, så kan vi bruge lidt fra Scalability faget OMG}
+
+For deployment of the system we have chosen a 3-tier architecture. This consists of one web server, one media server and one database server as shown in figure \ref{fig:3-tier}. 
+
+\begin{figure}[H]
+\capstart
+	\centering
+		\includegraphics[width=7.5cm]{n-tier-diagram.png}
+	\caption[]{The 3-tier architecture \label{fig:3-tier}}
+\end{figure}
+
+The web server is responsible for hosting Django and all the dynamic content, such as the HTML files. The media server is used to host static files, such as CSS, JavaScript and images. The database is hosted on a server of it's own, this allows us to easily add more web servers for scaling if needed.
+
+The system is hosted using Amazon Web Services (AWS)\footnote{\url{https://aws.amazon.com/}}. The web server is an EC2 instance running Ubuntu 14.04 with Apache2 and Django installed. The Apache2 web server is installed with the \texttt{mod\_wsgi} mod, to support Python web applications. 
+
+The media server is an S3 bucket, containing all the static files. For the database, we are running an Managed Relational Database Service (RDS) instance. Using RDS have several advantages. First, all data is separated from our web server. This makes horizontal scaling very easy, since we simply need to add another copy of the web server to the cluster and add a load balancer in front of that, as shown in figure \ref{fig:n-tier}.
+
+\begin{figure}[H]
+\capstart
+	\centering
+		\includegraphics[width=9.5cm]{2-n-tier-diagram.png}
+	\caption[]{The n-tier architecture \label{fig:n-tier}}
+\end{figure}
+
+Secondly vertical scaling becomes very available, since it is only a question of telling the EC2 instance to add more RAM, bigger CPU or whatever might be needed to gain more power \cite[p.~204]{henderson2006building}. 
+
+It would be ideal to run the n-tier setup from the beginning, since the 3-tier setup has one major fault, if one server fails, everything fails. There is no redundancy available, so we are vulnerable to potential full system failure. Even the n-tier setup shown in figure \ref{fig:n-tier} is not redundant enough, since there's still only one media server, and one database server. That means that even though we might be scalable in the terms of larger amounts of traffic, we are still vulnerable to system failures. 
+
+% The most preferable mode of redundancy 
+
+
+Since we are only using this for demo purposes, we have gone with the 3-tier setup, keeping the n-tier setup as a possible future architecture for a real production environment.
+
+
+
+
+
+
+\subsection{Summary}\todo{Summary on this...}
+In the sections above we have described CRSFIT in detail. It's features, how it is developed, the tools used and the deployment process. To summarize all the features, compared to section  \ref{sec:competitor-overview}, we have added CRSFIT to the overview as shown in table  \ref{tab:overview-2}.
+
+
+\begin{landscape}
+\thispagestyle{empty}
+    \begin{center}
+        \begin{table}[H]
+            \begin{tabularx}{\paperwidth}{ |X|X|X|X|X|X|X|X|X| } 
+             \hline
+                 & Web \newline Software \newline Hardware based & Multiple question types & Multiline support & Mathematical notation & Source code notation & Supports image upload as questions & Timed questions/auto closing questions & Payment model \\ \hline
+                 
+              Kahoot                & Web   & No    & No    & \cellcolor{red!25}No    & \cellcolor{red!25}No    & Yes   & Yes   & Free \\ \hline
+              Socrative             & Web   & Yes   & Yes   & \cellcolor{red!25}No    & \cellcolor{red!25}No    & Yes   & No    & Free \\ \hline
+              Poll Everywhere       & Web   & Yes   & No    & \cellcolor{green!25}Yes   & \cellcolor{red!25}No    & Yes   & Yes   & Subscription \\ \hline
+              iClicker              & All   & Yes   & No    & \cellcolor{red!25}No    & \cellcolor{red!25}No    & Yes   & No    & Mixed based on solution \\ \hline
+              Mentimeter            & Web   & Yes & No   & \cellcolor{red!25}No    & \cellcolor{red!25}No    & No    & Yes   & Subscription \\ \hline
+              Tophat                & Web   & Yes & Questions only & \cellcolor{green!25}Yes & \cellcolor{green!25}Yes   & No    & Yes & Subscription \\ \hline
+              Learning Catalytics   & Web \newline Software   & Yes    & Yes  & N/A   & N/A   & Yes   & N/A   & Subscription \\ \hline
+              Informa        & Software & Yes & Yes  & \cellcolor{red!25}No & \cellcolor{green!25}Yes   & No    & No    & Research project, free \\ \hline
+              Renaissance           & Software \newline Hardware & Yes & No & \cellcolor{red!25} No & \cellcolor{red!25}No & N/A & No & Hardware purchase \\ \hline
+              Classroom Learning Partner & Software \newline Hardware & Yes & Yes & \cellcolor{red!25}No & \cellcolor{green!25}Yes & Yes & No & Research project, not sold \\ \hline
+              Shakespeak            & Software \newline Web & Yes & Yes & \cellcolor{red!25}No & \cellcolor{red!25}No & (Yes) & No & Subscription \\ \Xhline{2\arrayrulewidth}
+              CRSFIT                & Web & No & Yes & \cellcolor{green!25}Yes & \cellcolor{green!25}Yes & No & No & N/A \\ \hline
+            
+            \end{tabularx}
+            \caption{Updated overview of different Classroom Response Systems}\label{tab:overview-2}
+        \end{table}
+    \end{center}
+\end{landscape}

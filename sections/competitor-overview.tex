@@ -1,9 +1,9 @@
-\section{Competitor overview}
-To get an overview of the different systems from a competitive standpoint, we introduce an objective analysis based on a list of heuristics that we find relevant based on our initial research within the field of CRS. The heuristics are based upon the common features and functionalities that are seen in the different systems. The list of CRS are based on our own research. The systems mentioned here covers a great deal of the CRS'es that are available today.
+\subsection{Competitor overview}\label{sec:competitor-overview}
+To get an overview of the different systems from a competitive standpoint, we introduce an objective analysis based on a list of features that we find relevant based on our initial research within the field of CRS. The features are based upon the common features and functionalities that are seen in the different systems. The list of CRS are based on our own research. The systems mentioned here covers a great deal of the CRS'es that are available today.
 
-\subsection{Heuristics}
+\subsubsection*{Features}
 
-The following is a list of the chosen heuristics.
+The following is a list of the chosen features.
 
 \begin{itemize}
     \item Web/Software/Hardware based
@@ -16,7 +16,7 @@ The following is a list of the chosen heuristics.
     \item Payment model
 \end{itemize}
 
-The first heuristic determines if the system is web, software or hardware based. Some systems are only accessible online, while others are purely hardware based, and users needs to purchase specific hardware for it to work. A few systems are also purely software based, and is created for use on computers, and does not have any specific hardware.
+The first feature determines if the system is web, software or hardware based. Some systems are only accessible online, while others are purely hardware based, and users needs to purchase specific hardware for it to work. A few systems are also purely software based, and is created for use on computers, and does not have any specific hardware.
 
 Many CRS offers multiple types of questions. An example is one of the more common ones, the quiz, also known as the multiple choice question where users can select an answer, and one (or more) of those answers are correct.
 
@@ -30,10 +30,9 @@ Image upload is the possibility to upload an image as a question. This enables t
 
 Timed questions enables the users to auto close questions after a certain amount of time. In some cases the remaining time available to answer the question is visible to the responders.
 
-The payment model differ from system to system. We will not go into details about pricing, but 
+The payment model differ from system to system. We will not go into details about pricing, but they have been included to give a greater context.
 
-
-All the following CRS will be analysed with these heuristics taken into consideration.
+All the following CRS will be analysed with these features taken into consideration.
 
 \subsection*{Kahoot}
 Kahoot is a web based CRS, that focuses on teaching children. Kahoot themselves states that  \emph{"it gives students a voice in the classroom, and allows educators to engage and focus their students through play and creativity"} \footnote{Retrieved on 2016-3-25 \url{https://getkahoot.com/support/faq/\#is-kahoot-a-social-media-tool}}. Kahoot is purely web based and supports multiple question types such as quizzes, discussions and surveys. It has image upload support to make questions more engaging, but it does not support multiline questions and answer, nor does it have support for math notation and source code highlighting. It does have timed questions though. Even though Kahoot works well, it is only created with simple questions in mind, that would fit in one line, also the colorful design is appealing for an audience of younger age. Kahoot is free to use and has no payment options.
@@ -56,7 +55,7 @@ Mentimeter is a purely web based platform and also one of the more feature rich.
 Tophat is similar to Mentimeter and Poll Everywhere in form and function. It's a web based solution capable of taking attendance and asking questions. Tophat features 6 different question types, a discussion function and a tournament mode which let students compete against each other. Tophat supports displaying math and code by including tags like [math]\emph{some equation}[/math] and [code]void main()[/code]. Code is simply displayed in a grey box with black text and is not highlighting any syntax. This also implies that it's possible to ask multiline questions. However, it's not possible to create multiline answers. It's possible to set a timer on questions in order to change the status from active (labeled as "Homework") or review to review and closed. Tophat features a few more statuses but these cannot be used when scheduling a question. In order to use Tophat, every student must pay a fee corresponding to how long they intend to use the system.
 
 \subsection*{Learning Catalytics}
-Learning Catalytics is a solution made by Pearson. The system seems feature rich from instruction videos and guides, but it's not possible to test for ourselves since it's behind a pay wall. Learning Catalytics seems to be software and web based from videos found at their website\footnote{Retrieved on 2016-03-28 \url{https://learningcatalytics.com/pages/training}}. The videos also reveal an advanced grading system based on how many tries it took to answer the correct answer. Learning Catalytics features options for the instructor to make a seat map which is supposedly used to tell students who to team up with when solving group exercises. An "I don't understand this"-button can be pressed to tell the instructor that you don't understand the material taught or the question asked. In order to use Learning Catalytics, students or their institution must pay for a subscription while instructors can use it for free.
+Learning Catalytics is a solution made by Pearson. The system seems feature rich from instruction videos and guides, but it's not possible to test for ourselves since it's behind a pay wall. Learning Catalytics seems to be software and web based from videos found at their website\footnote{Retrieved on 2016-03-28 \url{https://learningcatalytics.com/pages/training}}. The videos also reveal an advanced grading system based on how many tries it took to answer the correct answer. Learning Catalytics features options for the instructor to make a seat map which is supposedly used to tell students who to team up with when solving group exercises. An "I don't understand this"-button can be pressed to tell the instructor that you don't understand the material taught or the question asked. In order to use Learning Catalytics, students or their institution must pay for a subscription while instructors seemingly can use it for free.
 
 \subsection*{Informa}
 Informa is a system and tool for teaching Java. It's build and tested at University of Lugano. Informa is a traditional response system while it supports teaching Java with different approaches and techniques. For example: It's possible to ask students to highlight specific parts of some provided code or determine types of already highlighted code \cite[p.~2]{Hauswirth09}. Furthermore the system supports a method for asking students to draw diagrams and flowcharts \cite[p.~3]{Hauswirth09}. 
@@ -75,43 +74,41 @@ Shakespeak is the type of response system that uses traditional software in orde
 
 
 
+\subsection{Summary}
+Based on the above, we have summarized the features in table \ref{tab:overview}. Related to our research question, we have added coloured highlights to the columns that underline the fact that the system is \emph{enhanced for IT educational purposes}. As it can be seen in table \ref{tab:overview}, most systems does not have support for math and source code notation at the same time. Only Tophat supports both features based on our definition, and does well with mathematical notation, but less well on code. In fact, it only supports code for questions, but not for answers. Even though this is not part of our definition for code support, it is one of the features that we find relevant to expand on.
+None of the systems have syntax highlighting, and many only have oneline options for answers, this encourages us to include such features, since many people in the software industry seems to have syntax highlighting in their code editor.
 
-%    \item Web/Software/Hardware based
-%    \item Multiple question types
-%    \item Multiline question and answers
-%    \item Math notation
-%    \item Source code notation
-%    \item Supports image upload as questions
-%    \item Timed questions/auto closing questions
-%    \item Payment model
+% We wish to investigate whether a Classroom Response System that is enhanced for  IT  educational  purposes,  is  able  to  enhance  classroom  interactivity  and thereby  increase  the  learning  outcome. We wish  to  evaluate  the  system  by gathering empirical data by conducting a pre and post survey on students using our system.
+
+
+% Tophat er cool til matte syntax men kode kan kun vises i spørgsmål og ikke i svar!
 
 
 \begin{landscape}
+\thispagestyle{empty}
     \begin{center}
         \begin{table}[H]
             \begin{tabularx}{\paperwidth}{ |X|X|X|X|X|X|X|X|X| } 
              \hline
-                 & Web \newline Software \newline Hardware based & Multiple question types & Multiline support & Math notation & Source code notation & Supports image upload as questions & Timed questions/auto closing questions & Payment model \\ \hline
+                 & Web \newline Software \newline Hardware based & Multiple question types & Multiline support & Mathematical notation & Source code notation & Supports image upload as questions & Timed questions/auto closing questions & Payment model \\ \hline
                  
-              Kahoot                & Web   & No    & No    & No    & No    & Yes   & Yes   & Free \\ \hline
-              Socrative             & Web   & Yes   & Yes   & No    & No    & Yes   & No    & Free \\ \hline
-              Poll Everywhere       & Web   & Yes   & No    & Yes   & No    & Yes   & Yes   & Subscription \\ \hline
-              iClicker              & All   & Yes   & No    & No    & No    & Yes   & No    & Mixed based on solution \\ \hline
-              Mentimeter            & Web   & Yes, 7 & No   & No    & No    & No    & Yes   & Subscription \\ \hline
-              Tophat                & Web   & Yes, 6 & Questions only & Yes & Yes   & No    & Yes & Subscription \\ \hline
-              Learning Catalytics   & Web, software   & Yes    & Yes  & N/A   & N/A   & Yes   & N/A   & Subscription \\ \hline
-              Informa        & Software & Yes & Yes  & No & Yes   & No    & No    & Research project, free \\ \hline
-              Renaissance           & Software \newline Hardware & Yes & No & No & No & N/A & No & Hardware purchase \\ \hline
-              Classroom Learning Partner & Software \newline Hardware & Yes & Yes & No & Yes & Yes & No & Research project, not sold \\
-             \hline
-             Shakespeak & Software \newline Web & Yes, 2 & Yes & (Yes) & (Yes) & (Yes) & No & Subscription \\
-             \hline
+              Kahoot                & Web   & No    & No    & \cellcolor{red!25}No    & \cellcolor{red!25}No    & Yes   & Yes   & Free \\ \hline
+              Socrative             & Web   & Yes   & Yes   & \cellcolor{red!25}No    & \cellcolor{red!25}No    & Yes   & No    & Free \\ \hline
+              Poll Everywhere       & Web   & Yes   & No    & \cellcolor{green!25}Yes   & \cellcolor{red!25}No    & Yes   & Yes   & Subscription \\ \hline
+              iClicker              & All   & Yes   & No    & \cellcolor{red!25}No    & \cellcolor{red!25}No    & Yes   & No    & Mixed based on solution \\ \hline
+              Mentimeter            & Web   & Yes & No   & \cellcolor{red!25}No    & \cellcolor{red!25}No    & No    & Yes   & Subscription \\ \hline
+              Tophat                & Web   & Yes & Questions only & \cellcolor{green!25}Yes & \cellcolor{green!25}Yes   & No    & Yes & Subscription \\ \hline
+              Learning Catalytics   & Web \newline Software   & Yes    & Yes  & N/A   & N/A   & Yes   & N/A   & Subscription \\ \hline
+              Informa        & Software & Yes & Yes  & \cellcolor{red!25}No & \cellcolor{green!25}Yes   & No    & No    & Research project, free \\ \hline
+              Renaissance           & Software \newline Hardware & Yes & No & \cellcolor{red!25} No & \cellcolor{red!25}No & N/A & No & Hardware purchase \\ \hline
+              Classroom Learning Partner & Software \newline Hardware & Yes & Yes & \cellcolor{red!25}No & \cellcolor{green!25}Yes & Yes & No & Research project, not sold \\ \hline
+              Shakespeak            & Software \newline Web & Yes & Yes & \cellcolor{red!25}No & \cellcolor{red!25}No & (Yes) & No & Subscription \\ \Xhline{2\arrayrulewidth}
+              %CRSFIT                & Web & No & Yes & \cellcolor{green!25}Yes & \cellcolor{green!25}Yes & No & No & N/A \\ \hline
             \end{tabularx}
-            \caption{Overview of different systems}\label{tab:overview}
+            \caption{Overview of different Classroom Response Systems}\label{tab:overview}
         \end{table}
     \end{center}
 \end{landscape}
-
 
 
 

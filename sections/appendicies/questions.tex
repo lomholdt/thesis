@@ -1,0 +1,168 @@
+
+\begin{enumerate}
+    \item What is the correct jQuery code to set the background color of all <p> elements to red?
+        \begin{enumerate}
+            \item \texttt{\$("p").css("background-color","red");} *
+            \item \texttt{\$("p").layout("background-color","red”);}
+            \item \texttt{\$("p").manipulate("background-color","red");}
+            \item \texttt{\$("p").style("background-color","red”);}
+        \end{enumerate}
+    \item Look at the following selector: \texttt{\$("div p");} What does it select?
+        \begin{enumerate}
+            \item The first p element inside a div element
+            \item All div elements with a p element
+            \item All p elements inside a div element *
+        \end{enumerate}
+    \item Consider the following code 
+        \begin{verbatim}
+<link rel="stylesheet" href="this.css" type="text/css" />
+<link rel="stylesheet" media="screen and (max-width: 500px)" 
+      href="that.css" type="text/css" />
+        \end{verbatim}
+        Which is most correct?
+        \begin{enumerate}
+            \item The browser will switch from that.css to this.css when the screen resolution drops below 500 pixels
+            \item The code requires special webkit prefixes to added for it to run in Safari or Chrome
+            \item The browser will switch from this.css to that.css when the screen resolution is less than 500 pixels * 
+            \item The code fragment is neither javascript, jQuery, CSS or HTML.
+        \end{enumerate}
+    \item What is the output of the following Javascript
+        \begin{verbatim}
+            var x = typeof(5 + 5);
+            console.log(x);
+        \end{verbatim}
+        \begin{enumerate}
+            \item int
+            \item string
+            \item float
+            \item number *
+            \item Array
+            \item object
+        \end{enumerate}
+    \item What is the output of the following Javascript
+        \begin{verbatim}
+            var x = typeof("5" + 5);
+            console.log(x);
+        \end{verbatim}
+        \begin{enumerate}
+            \item int
+            \item string *
+            \item float
+            \item number
+            \item Array
+            \item object
+        \end{enumerate}
+    \item What is the output of the following Javascript
+        \begin{verbatim}
+            var x = 0, i;
+            for (i = 0; i < 500; i++)
+            { 
+                x += i; 
+            }
+            console.log(x);
+        \end{verbatim}
+        \begin{enumerate}
+            \item 238125
+            \item 124790
+            \item 124750 *
+            \item 362880
+        \end{enumerate}
+    \item What does the following code do?
+        \begin{verbatim}
+            $(document).ready(function() {
+                 $('#selected-plays > li').addClass('thisclass');
+            });
+        \end{verbatim}
+        \begin{enumerate}
+            \item adds the .thisclass style class to all \texttt{<li>} who are direct child descendants ( \texttt{>} ) of \texttt{\#selected-plays} *
+            \item adds the .thisclass style class to the first \texttt{<li>} that is direct child descendant ( \texttt{>} ) of \texttt{\#selected-plays}
+            \item adds the .thisclass style class to the last \texttt{<li>} that is direct child descendant ( \texttt{>} ) of \texttt{\#selected-plays}
+            \item adds the .thisclass style class to all \texttt{<li>} who are descendants ( \texttt{>} ) of \texttt{\#selected-plays}
+        \end{enumerate}
+    \item Consider the following jQuery selector and choose the answer that best describes it.
+        \begin{verbatim}
+            $('a[href^="ftp://"]')
+        \end{verbatim}
+        \begin{enumerate}
+            \item retrieves all \texttt{<a>} elements whose href attribute begin with the string \texttt{"ftp://"} *
+            \item retrieves all \texttt{<a>} elements whose href attribute contain the string \texttt{"ftp://"}
+            \item retrieves all \texttt{<a>} elements whose href attribute contain the string \texttt{"http://"}
+            \item retrieves all \texttt{<href>} elements whose href attribute contain the string \texttt{"ftp://"}
+        \end{enumerate}
+    \item Consider the following jQuery code 
+        \begin{verbatim}
+            $('<p>Hello</p>').appendTo('#container');
+        \end{verbatim}
+        This is equivalent to
+        \begin{enumerate}
+            \item \texttt{\$('.container').append('<p>Hello</p>');}
+            \item \texttt{\$('<p>Hello</p>').appendTo('.container');}
+            \item \texttt{\$('\#container').append('<p>Hello</p>');} *
+            
+            \item \texttt{\$('\#container').appendTo('<p>Hello</p>');}
+        \end{enumerate}
+    
+    \item Consider the following HTML:
+    \begin{verbatim}
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>...</head>
+        <body>
+            <button id="myButton">Get Person</button>
+            <div id="myData">...</div>
+            <script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
+        </body>
+        </html>
+    \end{verbatim}
+    We have an endpoint called 'http://swapi.co/api/people/1', that responds to GET requests with the follwing JSON:
+    \begin{verbatim}
+{
+    "name": "Luke Skywalker",
+    "height": "172",
+    "mass": "77",
+}
+    \end{verbatim}
+    What would be a correct way to add the 'name' to the 'myData' div using JQuery and AJAX?
+        \begin{enumerate}
+            \item 
+            \begin{verbatim}
+(function(){
+    $('#myButton').on('click', function() {
+        $.ajax({
+            url: 'http://swapi.co/api/people/1'
+        }).done(function(data) {
+           $('#myData').text(data.name);
+        });
+    });
+})();
+            \end{verbatim}
+            \item 
+            \begin{verbatim}
+(function(){
+    $('#myButton').click(function() {
+        $.ajax({
+            url: 'http://swapi.co/api/people/1',
+            method: 'POST',
+        }).done(function(data) {
+            document.getElementById('myData').innerHTML = data.name;
+        });
+    });
+})();
+            \end{verbatim}
+            \item 
+            \begin{verbatim}
+(function(){
+    $('#myButton').on('ready', function() {
+        $.GET({
+            url: 'http://swapi.co/api/people/1',
+        }).done(function(data) {
+            $('#myData').innerHTML(data.name);
+        });
+    });
+})();
+            \end{verbatim}
+        \end{enumerate}
+    
+    
+\end{enumerate}
+
