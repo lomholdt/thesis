@@ -1,0 +1,134 @@
+\begin{enumerate}
+    \item Which line contains a referentially transparent expression?
+    \begin{enumerate}
+        \item \texttt{ones.flatMap (x => ones).filter (x => scala.util.random.nextInt != 0)}
+        
+        \item \texttt{ones.flatMap (x => ones).map (x => scala.util.random.nextInt)}
+        
+        \item \texttt{ones.flatMap (x => ones).filter (\_ => true)}
+        
+        \item \texttt{while (true) print ("1")}
+        
+        \item \texttt{s.map ( x => if (x==0) throw DivisionByZero else 1/x )}
+    \end{enumerate}
+    
+    \item 
+        \begin{verbatim}
+trait Monoid[A] {
+    def op(a1: A, a2: A): A
+    def zero: A
+}
+
+trait Functor[F[_]] {
+    def map[A,B] (fa: F[A]) (f: A => B) :F[B]
+}
+
+trait Monad[F[_]] {
+    def unit[A] (a: => A): F[A]
+    def flatMap[A,B] (ma: F[A]) (f: A => F[B]) :F[B]
+}
+        \end{verbatim}
+    \begin{itemize}
+        \item Which of these is a higher kind: Monoid? Monad? Functor?
+        \item Is monoid a special case of a monad ?
+        \item Is monad a special case of a functor ?
+        \item Is functor a special case of a monoid ?
+    \end{itemize}
+    
+    
+    
+    \item Which of the above [below] expressions computes $\sum_{i=1}^n x_i$?
+    
+    \begin{enumerate}
+        \item \texttt{l.foldLeft (0) (\_ + \_)}
+        \item \texttt{l.foldRight (0) (\_ + \_)}
+        \item \texttt{l.reverse.foldRight (0) (\_ + \_)}
+        \item \texttt{l.foldRight (1) (\_ + \_)}
+    \end{enumerate}
+    
+    \item 
+    \begin{verbatim}
+sealed trait Tree[A]
+case class Branch[A] (l: Tree[A], a: A, r: Tree[A]) extends Tree[A]
+case class Leaf[A] (a: A) extends Tree[A]
+def height[A] (t: Tree[A]) :Int = t match {
+    case Leaf => 0
+    case Branch(l,a,r) => ??? // <-- what should we insert here?
+} 
+    \end{verbatim}
+    
+    \begin{enumerate}
+        \item height (l) + height (r) ?
+        \item height (l) - height (r) ?
+        \item throw Exception ("NonEmpty tree") ?
+        \item max (height (l), height(r)) + 1 ?
+        \item min (height (l), height(r)) + 1 ?
+    \end{enumerate}
+    
+    
+    \item 
+    \begin{itemize}
+        \item Which line contains the polymorphicly recursive call?
+        \item How do I recognize such a call?
+        \item What property is ensured by types in this implementation?
+    \end{itemize}
+    
+    \begin{verbatim}
+def addL[A] (a: A, t: FingerTree[A]) :FingerTree[A] = t match {
+    case Empty () => Single (a)
+    case Single (b) => Deep (Digit(a), Empty(), Digit(b))
+    case Deep (Digit (b,c,d,e), m, sf) =>
+        Deep (Digit(a,b), addL[Node[A]] (Node3 (c,d,e), m), sf)
+    case Deep (pr, m, sf) => Deep (a::pr, m, sf)
+}
+    \end{verbatim}
+    
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

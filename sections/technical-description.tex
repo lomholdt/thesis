@@ -66,7 +66,7 @@ We have chosen a MySQL database for our data storage. Within Django's settings f
 
 Every time an object is created, changed or deleted (an user, a question, an answer etc.) Django handles transactions and communication with the database. This makes a third party ORM (Object-relational mapping) service unnecessary. An ORM is typically a third party service which is sometimes paid for and takes time to integrate with the chosen framework. A short discussion of this problem can be found in the article by \citeA{johnson2005j2ee} where he highlights some of the history of Java's integration with ORM's.
 
-We could have chosen a different database for the system such as PostgreSQL. This would only require us to add another database to the before mentioned settings, tell Django to migrate and remove the old database from the settings when done. This is convenient for changing the database at a later point if it should be necessary.
+We could have chosen a different database for the system such as PostgreSQL. This would only require us to add a different database to the before mentioned settings, tell Django to migrate and remove the old database from the settings when done. This is convenient for changing the database at a later point if it should be necessary.
 
 \subsubsection*{Caching}
 To prevent our database from being hit too often we have added caching to the site. In this case we are using Memcached\footnote{\url{https://memcached.org/}}. We are primarily caching the static pages on the site, and the search results. This way common search queries will not hit the database so often. For testing purposes this is not overly important, but we do wish to be prepared with a robust and scalable infrastructure.
@@ -211,7 +211,7 @@ class Room(models.Model):
         return self.title
 \end{lstlisting}
 
-The owner is defined as a foreign key and represents a User relationship. In this case, a Room must belong to a User. The \texttt{date\_time} and \texttt{updated\_at} fields are automatically updated with the \texttt{auto\_now\_add} and \texttt{auto\_now} attributes set to \texttt{True}. The model also has a Meta class defined. In this case the it only defines the unique database keys, but it could contain more information.
+The owner is defined as a foreign key and represents a User relationship. In this case, a Room must belong to a User. The \texttt{date\_time} and \texttt{updated\_at} fields are automatically updated with the \texttt{auto\_now\_add} and \texttt{auto\_now} attributes set to \texttt{True}. The model also has a \texttt{Meta} class defined. In this case the it only defines the unique database keys, but it could contain more information.
 
 \subsubsection*{Input sanitation}
 The voting app contains a lot of user input. Each room has a name that is created by the user. The groups, questions and answers also relies heavily on user generated input. To prevent users from creating malicious input, we are sanitizing everything using Bleach on the server side. Bleach is a \emph{"... whitelist-based HTML sanitizing library that escapes or strips markup and attributes."}\footnote{Retrieved on 2016-04-04\url{https://bleach.readthedocs.org/en/latest/}}. We are then capable of sanitizing input by calling the \texttt{clean} method on a Bleach instance. An example of using bleach in the project, can be found in the \texttt{question\_answer\_create} method as seen below:
@@ -288,9 +288,9 @@ For deployment of the system we have chosen a 3-tier architecture. This consists
 
 The web server is responsible for hosting Django and all the dynamic content, such as the HTML files. The media server is used to host static files, such as CSS, JavaScript and images. The database is hosted on a server of it's own, this allows us to easily add more web servers for scaling if needed.
 
-The system is hosted using Amazon Web Services (AWS)\footnote{\url{https://aws.amazon.com/}}. The web server is an EC2 instance running Ubuntu 14.04 with Apache2 and Django installed. The Apache2 web server is installed with the \texttt{mod\_wsgi} mod, to support Python web applications. 
+The system is hosted using Amazon Web Services (AWS)\footnote{\url{https://aws.amazon.com/}}. The web server is an EC2 instance running Ubuntu 14.04 with Apache2 and Django installed. The Apache2 web server is installed with the \texttt{mod\_wsgi}\footnote{\url{https://modwsgi.readthedocs.io/en/develop/}} mod, to support Python WSGI applications.
 
-The media server is an S3 bucket, containing all the static files. For the database, we are running an Managed Relational Database Service (RDS) instance. Using RDS have several advantages. First, all data is separated from our web server. This makes horizontal scaling very easy, since we simply need to add another copy of the web server to the cluster and add a load balancer in front of that, as shown in figure \ref{fig:n-tier}.
+The media server is an Amazon S3 bucket, containing all the static files. For the database, we are running an Amazon Relational Database Service (RDS) instance. Using RDS have several advantages. First, all data is separated from our web server. This makes horizontal scaling of the web servers very easy, since we simply need to add another copy of our EC2 instance  to the cluster and add a load balancer in front of that, as shown in figure \ref{fig:n-tier}.
 
 \begin{figure}[H]
 \capstart
@@ -313,7 +313,7 @@ Since we are only using this for demo purposes, we have gone with the 3-tier set
 
 
 
-\subsection{Summary}\todo{Summary on this...}
+\subsection{Summary}
 In the sections above we have described CRSFIT in detail. It's features, how it is developed, the tools used and the deployment process. To summarize all the features, compared to section  \ref{sec:competitor-overview}, we have added CRSFIT to the overview as shown in table  \ref{tab:overview-2}.
 
 
@@ -330,16 +330,16 @@ In the sections above we have described CRSFIT in detail. It's features, how it 
               Poll Everywhere       & Web   & Yes   & No    & \cellcolor{green!25}Yes   & \cellcolor{red!25}No    & Yes   & Yes   & Subscription \\ \hline
               iClicker              & All   & Yes   & No    & \cellcolor{red!25}No    & \cellcolor{red!25}No    & Yes   & No    & Mixed based on solution \\ \hline
               Mentimeter            & Web   & Yes & No   & \cellcolor{red!25}No    & \cellcolor{red!25}No    & No    & Yes   & Subscription \\ \hline
-              Tophat                & Web   & Yes & Questions only & \cellcolor{green!25}Yes & \cellcolor{green!25}Yes   & No    & Yes & Subscription \\ \hline
+              Tophat                & Web   & Yes & Questions only & \cellcolor{green!25}Yes & \cellcolor{red!25}No, only in questions   & No    & Yes & Subscription \\ \hline
               Learning Catalytics   & Web \newline Software   & Yes    & Yes  & N/A   & N/A   & Yes   & N/A   & Subscription \\ \hline
               Informa        & Software & Yes & Yes  & \cellcolor{red!25}No & \cellcolor{green!25}Yes   & No    & No    & Research project, free \\ \hline
               Renaissance           & Software \newline Hardware & Yes & No & \cellcolor{red!25} No & \cellcolor{red!25}No & N/A & No & Hardware purchase \\ \hline
-              Classroom Learning Partner & Software \newline Hardware & Yes & Yes & \cellcolor{red!25}No & \cellcolor{green!25}Yes & Yes & No & Research project, not sold \\ \hline
-              Shakespeak            & Software \newline Web & Yes & Yes & \cellcolor{red!25}No & \cellcolor{red!25}No & (Yes) & No & Subscription \\ \Xhline{2\arrayrulewidth}
+              Classroom Learning Partner & Software \newline Hardware & Yes & Yes & \cellcolor{red!25}No & \cellcolor{green!25}Yes & Yes & No & Research project, not available \\ \hline
+              Shakespeak            & Software \newline Web & Yes & Yes & \cellcolor{red!25}No & \cellcolor{red!25}No & No & No & Subscription \\ \Xhline{2\arrayrulewidth}
               CRSFIT                & Web & No & Yes & \cellcolor{green!25}Yes & \cellcolor{green!25}Yes & No & No & N/A \\ \hline
             
             \end{tabularx}
-            \caption{Updated overview of different Classroom Response Systems}\label{tab:overview-2}
+            \caption{Updated overview of Classroom Response Systems}\label{tab:overview-2}
         \end{table}
     \end{center}
 \end{landscape}

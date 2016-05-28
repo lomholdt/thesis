@@ -1,13 +1,11 @@
 \subsection{System description}
 %The system can be described as a Classroom Response System (CRS) in the sense that it's a system made for polling and gathering responses in a classroom.
 
-Based on the above, we have created a high-fidelity prototype of a system that supports the features discussed in the previous section. We call it CRSFIT, which is an abbreviation of Classroom Response System For IT. The system includes features that support asking and answering technical questions\footnote{Here we've defined technical questions as questions that can display formatted code and mathematical expressions.}. Here we'll give an explanation of how to use the system and how the different parts play together as a whole. 
-
+CRSFIT basically consists of rooms, groups, questions and answers, where users are able to ask questions, and gather responses.
 
 A room is a collection of groups, and any user can create a room. The use of the term \emph{room} could be resembled with a classroom. It is possible to subscribe to a room, which makes it appear on the dashboard for easy access. The dashboard is the first thing you see when you log in and contains an overview of all rooms subscribed to and created. You may search for any room by using the search field in the menu bar. A blank search will show you every room available, and you may subscribe directly from the search results. It is also possible to simply obtain the rooms URL, and subscribe to it from there.
 
 Within a room you'll find groups which is a collection of questions (hence a group). These groups are included in order to structure questions. There could be multiple reasons to why you would group questions together. One could be that you would want to make a group of questions public at once. Another reason could be that you would like to keep questions from each lecture separated in groups.
-
 
 In order to control which groups and questions are open for answers, we made a feature that would let the owner control the access. This is done by pressing open/close on groups and question. Subscribers of a room will be able to see closed groups but not the belonging questions. If a group is open, subscribers will be able to see the question but not answering them unless the questions are open as well.
 
@@ -31,3 +29,5 @@ This is meant to be convenient for people already knowing and using \LaTeX.
 In theory, the system supports adding unlimited answers to a question. The only criteria is that an answer can't be left empty by the user. The creator of a question have the ability to mark one or more answers as correct. This will make subscribers able to track their performance and see whether they answered correctly or not. It's also possible not to mark an answer as correct if the system is simply used for polling, and there are no correct answer.
 
 When responses are received to a question, the owner can track what is being answered in real time. When enough responses are received, the owner can then close the question and the subscribers will be able to see the responses as well. Responses are shown with a chart which describes how many have chosen each answer.
+
+The system includes features which are not described in this section. That's features that are not essential for the system to work as we intend, but features we found suitable or nice to have during the development of CRSFIT. The technical description of the system will include more details which will include mentions of some of these features.

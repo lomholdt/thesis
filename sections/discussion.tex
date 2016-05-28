@@ -1,26 +1,67 @@
 \section{Discussion}
 
-\subsection{The optimal setup and test}
-Given the time, we would have done our testing differently. In order to tell if our system could increase interactivity in courses where programming or mathematics are taught we should have done further and different testing. A single test would normally be done during a whole semester. The pretest should be done in the beginning or few weeks into the course to establish base results which the implementation of the CRS should aim to improve. The posttest should be done in the ending of the semester and it should ask the same questions concerning individual and general questions as the pretest did.
+\subsection{Improving the setup and test}
+During the process we realized, that given the time, we would have done our testing slightly different. In order to tell if our system could increase interactivity in courses where programming or mathematics are taught, we could have done further and different testing that could have improved the accuracy of the results. A single test would normally be done during a whole semester, and not only during one lecture as it was done here. The pretest should be done in the beginning or a few weeks into the course to establish base results which the implementation of the CRS should aim to improve. The posttest should be done in the ending of the semester and it should ask the same questions concerning individual and general questions as the pretest did. This way we could tell if the students participating in the test felt an increase in their own and in the general interactivity. It's important to notice that any increase measured can't be seen as a direct effect of implementing a CRS but only that it didn't decrease the interactivity. 
 
-While we were given half an hour in a single lecture to do the pretest, implementation and posttest it wouldn't make sense to ask the participants to answer the same questions in the pre- and posttest. If we did that any significant differences found would be irrelevant due to the short time they had to use the system. Furthermore, the setting was not a normal lecture as we carried out the the "implementation" asking 10 questions in a row. The optimal setting would be normal lectures where the teacher responsible for the course asked the students one or two questions related to the lecture's subject and at suitable moments. The systems should ultimately be used over a longer period of time before we would be able to say if it could increase the interaction.
+%While we were given half an hour in a single lecture to do the pretest
+Since the test was performed during only one lecture we had to do the pretest, implementation and posttest during this time. It wouldn't make sense to ask the students in the Frameworks course to answer the same questions in the pre- and posttest, since they would only have had roughly 30 minutes of exposure to it. Based on this, any significant differences found would be irrelevant due to the short time they had to use the system. Furthermore, the setting was not fully optimal, since it was not a normal lecture, as we carried out the "implementation test" asking 10 questions in a row. The optimal setting would be normal lectures where the teacher responsible for the course asked the students one or two questions related to the lecture's subject at suitable moments. The systems should ultimately be used over a longer period of time before we would be able to conclude if it could increase the interaction. The same counts for the test which was carried out in the Advanced course. The students were given the pretest questionnaire in the beginning of a lecture and answered the posttest questionnaire in the end of the lecture. Had we developed the questionnaires earlier in the process of this project we could have given students the pretest at an earlier point of the semester in order to establish a base result which we could aim to improve by.
 
 
 
-Punkter til discussion:
-- Gentag eskperiment/undersøgelse over et helt semester
-	- "Due to limited time for this project..."
-	- Sammenlign pre med post hvor man spørger ind til individual og general interactivity igen
-- Antallet af respondenter
-- Måden testen blev udført på
-- Vores reelle konkurrencedygtighed (Porter)
-    - Prototype kontra færdigt produkt 
-- Undersøg dybere med kode/math
-- We've created an instrument for measuring our system
-    - Which we've tested
-    
+Some questions in the pretest got a large amount of neutral responses (5 on the scale) as mentioned in the analysis of the test. In particular the last two questions in the pretest (appendix \ref{app:pretest-general}, item 8 and 9). When we offer respondents to answer 1-9 on a Likert scale, then we don't take into consideration if the respondents don't have an opinion or don't know how they would assess the statement. Therefore, we should consider providing an "I don't know"-option together with the scale in future tests. 
 
-- Vi undersøger ikke kode/math-delen som vi måske gerne ville have gjort for at sige noget om dét.
-    - "Did you find it easy to answer questions which include code?"
-        - Det kunne måske have været brugt til at sammenligne noget.
+
+
+
+
+
+
+
+
+
+\todo{Skift den her overskrift - maybe}\subsection{Code and math}
+A future test should try to investigate more details about presenting code and math in CRSFIT. As of now, the only question in our test asking into any details about code is the one where we ask whether or not the students tested and ran code from the questions. This single question did however give us some idea of how students could easily copy and paste code from the questions in order to find the correct answer. While it's meant to be a challenge to figure out the correct answer, running the code and get the correct answer defeats the purpose of figuring it out yourself. Every question we asked with CRSFIT in the Frameworks course was able to be solved by simply testing it. Limiting the time given to answer such questions could prevent most questions from being run and tested. This would rely on how the person asking questions are using CRSFIT and can not be prevented by us. A future version of CRSFIT could have a feature for automatically closing a question after a desired period of time and the system could suggest using the feature if the question involved code. %In the Advanced course only 16\% of the students reported they ran code from the questions. 
+
+If we were to investigate more details about how code and math are presented and used in CRSFIT, we could add questions to the test asking into how students find the presentation of code and math and talk to teachers how they find writing code and math in the system. Writing code in a question or answer can be a challenge as of how the system is right now. Since we are using a 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Seen from a competitive standpoint, CRSFIT is highly dependent on the success of the source code and math notation features. The rivalry among other CRS is high, and substituting or shifting systems from semester to semester is easy unless more critical features like grading, are build into it. Also CRSFIT is a proof of concept product. It has less features than many of the other products available, and it's primary focus is on possibly improving interaction in IT classes. The system is also not production ready. Minor usability bugs when entering code formatted questions in the WYSIWYG editor was found, and would have to be fixed before opening for public use. 
+
+
+
+
+
+%Punkter til discussion:
+%- Gentag eskperiment/undersøgelse over et helt semester
+%	- "Due to limited time for this project..."
+%	- Sammenlign pre med post hvor man spørger ind til individual og general interactivity igen
+%- Antallet af respondenter
+%- Måden testen blev udført på
+%- Vores reelle konkurrencedygtighed (Porter)
+%    - Prototype kontra færdigt produkt 
+%- Undersøg dybere med kode/math
+%- We've created an instrument for measuring our system
+%    - Which we've tested
+%    
+%
+%- Vi undersøger ikke kode/math-delen som vi måske gerne ville have gjort for at sige noget om dét.
+%    - "Did you find it easy to answer questions which include code?"
+%    - "Using syntax highlighting helped me better understand the question asked"
+%    - "I found it engaging answering questions based on code"
+%        - Det kunne måske have været brugt til at sammenligne noget.
         
