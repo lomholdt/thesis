@@ -93,7 +93,7 @@ We've used an amount of external packages for creating this project, which can b
 All packages are installed by running the command \texttt{pip install -r requirements.txt} from within the virtual environment. A detailed description of selected packages are given in this section according to where in the system they are used.
 
 \subsubsection*{Project Structure}
-The structure of the project can be seen below. Folders are indicated by a trailing backslash. The project itself is called CRS and is located at the root of the structure. All the folders shown in the CRS folder are Django applications (app). An app in Django-terminology is a separate part of the system, that \emph{“... describes a Python package that provides some set of features."}\footnote{Retrieved on 2016-04-01, \url{https://docs.djangoproject.com/en/1.9/ref/applications/\#projects-and-applications}}. The vote folder is expanded to show the underlying structure, as an example of an application structue.
+The structure of the project can be seen below. Folders are indicated by a trailing backslash. The project itself is called CRS and is located at the root of the structure. All the folders shown in the CRS folder are Django applications (app). An app in Django-terminology is a separate part of the system, that \emph{"... describes a Python package that provides some set of features."}\footnote{Retrieved on 2016-04-01, \url{https://docs.djangoproject.com/en/1.9/ref/applications/\#projects-and-applications}}. The vote folder is expanded to show the underlying structure, as an example of an application structue.
 
 \begin{figure}[H]
     \dirtree{%
@@ -161,9 +161,9 @@ The email is crucial for resetting passwords, otherwise the account will be lost
 The \texttt{dashboard} app is responsible for handling the users backend. When a user logs in, they are presented with a personal dashboard that shows a variety of information, relevant for that user.
 The dashboard contains information about which rooms the user is subscribed to and information about the rooms the user owns. It's possible to create new rooms directly from the dashboard. The search endpoint is also registered within the dashboard app. Searching is added as a convenience feature for the first iteration og the project and is not meant for production use. A full text search feature using a search engine like Solr or Elasticsearch would be preferable, but since it will not add any direct value to answering our research question, it is currently implemented as a simple database lookup on room names for now.
 
-\subsubsection*{Home} \todo{Tilføj mere lækkert til home beskrivelsen}
-The \texttt{home} app handles static pages like the front page and also the user profile pages.
-All pages related to a home area is located within the home app. Also, the short-URL feature found in groups is handled from within the \texttt{home} app. Examples of common pages that could be created here is an 'About Us' page, an FAQ etc.
+\subsubsection*{Home} %\todo{Tilføj mere lækkert til home beskrivelsen}
+The \texttt{home} app handles static pages like the front page and the user profile pages.
+All pages related to the home application is located within the home app. Also, the short-URL feature found in groups is handled from within the \texttt{home} app. Examples of common pages that could be created here is an 'About Us' page, an FAQ etc.
 
 \subsubsection*{Main}
 The \texttt{main} app is special, as it is the \emph{root} app in the project. It contains the \texttt{settings.py} file, which is global for all applications. It is also where generic templates are located, such as the \texttt{base.html} file, that contains the main html structure of all pages throughout the site. Here we are able to include static asset files such as javascript, css and metatags that should be included everywhere. Templates such as navigation and logic for showing messages to the user is located here.
@@ -172,7 +172,7 @@ The \texttt{main} app is special, as it is the \emph{root} app in the project. I
 %Since the number of CSS and Javscript files grows quickly, we are using the \texttt{Compress}\footnote{\url{https://github.com/django-compressor/django-compressor}} application for combining several static files into one. This way we are able to limit the number of static file requests, and optimize the page load time. Javscript files are also minified to reduce file size. 
 
 \subsubsection*{Vote}
-The \texttt{vote} app is the most comprehensive app in the project. It holds all the logic for creating questions, registering votes, showing responses etc. The vote app lives under the REST full namespace \texttt{http://localhost/vote/...}. Except for the creation of rooms, every url that you can visit in the vote app requires a room primary key. In listing \ref{lst:urlpattern-for-room-edit} the primary key is the room id. The id is expressed as a regular expression with the name room, as specified within the brackets \texttt{<room>}. The name does not matter and could be anything, but for the sake of readability we have chosen room.
+The \texttt{vote} app is the most comprehensive app in the project. It holds all the logic for creating questions, registering votes, showing responses etc. The vote app lives under the REST full namespace \texttt{http://localhost/vote/...}. Except for the creation of rooms, every url that you can visit in the vote app requires a room primary key. In listing \ref{lst:urlpattern-for-room-edit} the primary key is the room id. The id is expressed as a regular expression with the name room, as specified within the brackets \texttt{<room>}. The name here does not matter and could be anything, but for the sake of readability we have chosen room.
 
 \begin{lstlisting}[caption=URL Pattern for Room Edit, label=lst:urlpattern-for-room-edit]
 url(r'^room/(?P<room>[0-9]+)/edit/$', views.room_edit, name='room_edit')
@@ -211,7 +211,7 @@ class Room(models.Model):
         return self.title
 \end{lstlisting}
 
-The owner is defined as a foreign key and represents a User relationship. In this case, a Room must belong to a User. The \texttt{date\_time} and \texttt{updated\_at} fields are automatically updated with the \texttt{auto\_now\_add} and \texttt{auto\_now} attributes set to \texttt{True}. The model also has a \texttt{Meta} class defined. In this case the it only defines the unique database keys, but it could contain more information.
+The owner is defined as a foreign key and represents a User relationship. In this case, a Room must belong to a User. The \texttt{date\_time} and \texttt{updated\_at} fields are automatically updated with the \texttt{auto\_now\_add} and \texttt{auto\_now} attributes set to \texttt{True}. The model also has a \texttt{Meta} class defined. In this case it only defines the unique database keys, but it could contain more information.
 
 \subsubsection*{Input sanitation}
 The voting app contains a lot of user input. Each room has a name that is created by the user. The groups, questions and answers also relies heavily on user generated input. To prevent users from creating malicious input, we are sanitizing everything using Bleach on the server side. Bleach is a \emph{"... whitelist-based HTML sanitizing library that escapes or strips markup and attributes."}\footnote{Retrieved on 2016-04-04\url{https://bleach.readthedocs.org/en/latest/}}. We are then capable of sanitizing input by calling the \texttt{clean} method on a Bleach instance. An example of using bleach in the project, can be found in the \texttt{question\_answer\_create} method as seen below:
@@ -222,6 +222,16 @@ bleach.clean(new_question.question_text, tags=ALLOWED_TAGS)
 
 The \texttt{ALLOWED\_TAGS} is the whitelist consisting of an array defined by us, that defines which tags are allowed and which are to be stripped/sanitized away. Since the system supports code input, it is important that the user is able to input fx. \texttt{<script>} tags. Obviously we do not want any of the users JavaScript to be executed when the page loads, and Bleach helps us do this, by escaping the tags that are not white listed.
 The current version of the CRSFIT application does not have any client side validation. The server side validation is the most important for keeping our data safe, where the client side validation is good for usability and potentially lowering the amount of invalid data posted to the server. 
+
+\subsubsection*{WYSIWYG editor}
+We have implemented TinyMCE\footnote{\url{https://www.tinymce.com/}} in the system, a \emph{What You See Is What You Get}-editor. This is done in order to provide a familiar way of editing text. Using it, we can add custom features like the \texttt{PRE} button to mark text as code. See figure \ref{fig:tinymce} for a view of the editor, where a question has been added with text formated as code in the middle.
+
+\begin{figure}[H]
+\capstart
+	\centering
+		\includegraphics[width=\textwidth]{tinymce.png}
+	\caption[TinyMCE]{TinyMCE editor as implemented in CRSFIT.}\label{fig:tinymce}
+\end{figure}
 
 \subsubsection*{Short URL}
 To find a group it is necessary to know the URL. As a convenience, a url shortening feature is added to all groups using the \texttt{short\_url} library\footnote{\url{https://pypi.python.org/pypi/short_url}}. The url is not stored as persistent data, but simply generated on the fly. When a user makes a GET request to one of the shortened URL's the follwing method is hit.
@@ -332,7 +342,7 @@ In the sections above we have described CRSFIT in detail. It's features, how it 
               Mentimeter            & Web   & Yes & No   & \cellcolor{red!25}No    & \cellcolor{red!25}No    & No    & Yes   & Subscription \\ \hline
               Tophat                & Web   & Yes & Questions only & \cellcolor{green!25}Yes & \cellcolor{red!25}No, only in questions   & No    & Yes & Subscription \\ \hline
               Learning Catalytics   & Web \newline Software   & Yes    & Yes  & N/A   & N/A   & Yes   & N/A   & Subscription \\ \hline
-              Informa        & Software & Yes & Yes  & \cellcolor{red!25}No & \cellcolor{green!25}Yes   & No    & No    & Research project, free \\ \hline
+              Informa        & Software & Yes & Yes  & \cellcolor{red!25}No & \cellcolor{green!25}Yes, but only Java   & No    & No    & Research project, free \\ \hline
               Renaissance           & Software \newline Hardware & Yes & No & \cellcolor{red!25} No & \cellcolor{red!25}No & N/A & No & Hardware purchase \\ \hline
               Classroom Learning Partner & Software \newline Hardware & Yes & Yes & \cellcolor{red!25}No & \cellcolor{green!25}Yes & Yes & No & Research project, not available \\ \hline
               Shakespeak            & Software \newline Web & Yes & Yes & \cellcolor{red!25}No & \cellcolor{red!25}No & No & No & Subscription \\ \Xhline{2\arrayrulewidth}
