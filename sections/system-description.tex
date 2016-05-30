@@ -1,13 +1,13 @@
 \subsection{System description}
 %The system can be described as a Classroom Response System (CRS) in the sense that it's a system made for polling and gathering responses in a classroom.
 
-CRSFIT basically consists of rooms, groups, questions and answers, where users are able to ask questions, and gather responses.
+CRSFIT consists of rooms, groups, questions and answers, where users are able to ask questions, and gather responses.
 
-A room is a collection of groups, and any user can create a room. The use of the term \emph{room} could be resembled with a classroom. It is possible to subscribe to a room, which makes it appear on the dashboard for easy access. The dashboard is the first thing you see when you log in and contains an overview of all rooms subscribed to and created. You may search for any room by using the search field in the menu bar. A blank search will show you every room available, and you may subscribe directly from the search results. It is also possible to simply obtain the rooms URL, and subscribe to it from there.
+A room is a collection of groups, and any user can create a room. The use of the term \emph{room} could be resembled with a classroom. It is possible to subscribe to a room, which makes it appear on the dashboard for easy access. The dashboard is the first thing you see when you log in and it contains an overview of all rooms the logged in user has subscribed to and created. You may search for any room by using the search field in the menu bar. A blank search will show you every room available, and you may subscribe directly from the search results. It is also possible to simply obtain the rooms URL and access it directly, and subscribe to it from there.
 
-Within a room you'll find groups which is a collection of questions (hence a group). These groups are included in order to structure questions. There could be multiple reasons to why you would group questions together. One could be that you would want to make a group of questions public at once. Another reason could be that you would like to keep questions from each lecture separated in groups.
+Within a room you'll find groups which is a collection of questions. These groups are included in order to have on place for a \emph{group} of questions. There could be multiple reasons to why you would group questions together. One could be that you would want to make a group of questions public at once. Another reason could be that you would like to keep questions from each lecture separated in groups.
 
-In order to control which groups and questions are open for answers, we made a feature that would let the owner control the access. This is done by pressing open/close on groups and questions. See figure \ref{fig:group} for a list of questions where some questions are open for answers while others har closed. This is indicated in the column \emph{Open for answers}. Subscribers of a room will be able to see closed groups but not the belonging questions. If a group is open, subscribers will be able to see the question but not answering them unless the questions are open as well. When clicking the \emph{Show info} button a small box with info about the particular question will be showed, as in figure \ref{fig:modal}. The box shows information about amount of answer options, received answers, how many students answered correct (in \% and only if the question is closed), when the question was created and when it was last changed.
+In order to control which groups and questions are open for answers, we made a feature that would let the owner control the access. This is done by pressing open/close on groups and questions. See figure \ref{fig:group} for a list of questions where some questions are open for answers while others has closed. This is indicated in the column \emph{Open for answers}. Subscribers of a room will be able to see closed groups but not the belonging questions. If a group is open, subscribers will be able to see the question but not answering them unless the questions are open as well. When clicking the \emph{Show info} button a small box with info about the particular question will be shown, as in figure \ref{fig:modal}. The box shows information about how many answer options is available, received answers, how many students answered correctly (in \% and only if the question is closed), when the question was created and when it was last changed.
 
 \begin{figure}[H]
 \capstart
@@ -25,14 +25,17 @@ In order to control which groups and questions are open for answers, we made a f
 
 %% Main features
 The main feature of the system consists of creating and answering questions. When you create a new question, you are presented with an option to create one or more answers.
-These features are almost identical in every similar response system, and is part of the definition of the basic functionalities in a CRS. The structure as described above can be seen in figure \ref{fig:structure}.
+These features are almost identical in every CRS, and is part of the definition of the basic functionalities in CRSs. 
+The structure of CRSFIT as described above can be seen in figure \ref{fig:structure}.
 
 \begin{figure}[H]
 \capstart
 	\centering
 		\includegraphics[width=3.5cm]{structure.png}
-	\caption[System Structure]{The system structure}\label{fig:structure}
+	\caption[System Structure]{The system structure.}\label{fig:structure}
 \end{figure}
+
+Figure \ref{fig:structure} shows how one room can have zero or many groups, a group belongs to a room and can have zero or many questions. A question must have at least one or more answers.
 
 When creating and editing questions, we have made it possible to include code and mathematical expression in questions and answers. Code will be nicely formatted with the Prettify library \cite{google/code-prettify_2016} and mathematical expressions will be shown with the MathJax library \cite{mathjax_2016}. This eliminates the need for using different systems to ask questions when you want to include code or math. 
 
@@ -60,4 +63,7 @@ When students are answering a question they see a screen like in figure \ref{fig
 	\caption[A question page]{View of a question with four answering options.}\label{fig:question}
 \end{figure}
 
-The system includes features which are not described in this section. That's features that are not essential for the system to work as we intend, but features we found suitable or nice to have during the development of CRSFIT. The technical description of the system will include more details which will include mentions of some of these features.
+The features mentioned above are part of the core functionality of CRSFIT. Other features such as resetting passwords, changing password, editing profile is also possible and is considered basic functionality when being able to register as a user.
+The technical description of the system will include more details on some of these features.
+
+%The system includes features which are not described in this section. Features that are not essential for the system to work as we intend, but features we found suitable or nice to have during the development of CRSFIT. 
