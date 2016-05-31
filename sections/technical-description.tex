@@ -45,7 +45,7 @@ Templates is what gets rendered and shown in the browser. The templates in Djang
 
 A url pattern is also found within each Django app. It's defined in the \texttt{urls.py} file where a regular expression is matching and directing URL requests to different views. Parts of an \texttt{url.py} file can be seen here:
 
-\begin{lstlisting}[caption=URL Patterns from the vote app, label=lst:urlpatterns]
+\begin{lstlisting}[caption=URL patterns from the vote app, label=lst:urlpatterns]
 urlpatterns = [
     # ROOM
     url(r'^room/create/$', views.CreateRoomView.as_view(), name='room_create'),
@@ -119,7 +119,7 @@ The structure of the project can be seen below. Folders are indicated by a trail
             .2 manage.py.
             .2 requirements.txt.
     }
-    \caption{The Project Structure}
+    \caption{The Django project structure}
     \label{fig:project-structure}
 \end{figure}
 
@@ -178,7 +178,7 @@ The rooms (and any other entity that we have defined here) is expressed as a Dja
 The models can have fields defined, as well as methods. The room example in listing \ref{lst:room-model} has the fields owner, title, \texttt{date\_time} and \texttt{updated\_at} and some convenience methods.
 
 
-\begin{lstlisting}[caption=The Room Model, label=lst:room-model]
+\begin{lstlisting}[caption=The Room model, label=lst:room-model]
 class Room(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
