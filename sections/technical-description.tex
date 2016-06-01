@@ -153,7 +153,7 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 \end{lstlisting}
 
-The email is crucial for resetting passwords, otherwise the account will be lost if a user forgets his/her password. The whole process is handled by Django as long as we provide a email back-end which is specified in the \texttt{settings.py} file found in the main app. In order to send emails we use the external service Mailgun\footnote{Retrieved on 2016-04-04: \url{https://www.mailgun.com/}}, which sends email on behalf of the system. Whenever a user requests to reset a password, an email with a unique link is sent to the users email address. The link is automatically created by Django and could look like this:  \texttt{.../authentication/reset/MTY/4as-663c1494cfc7b061c25d/}. This links redirects to a page from where the user can enter a new password.
+The email is crucial for resetting passwords, otherwise the account will be lost if a user forgets his/her password. The whole process is handled by Django as long as we provide a email back-end which is specified in the \texttt{settings.py} file found in the main app. In order to send emails we use the external service Mailgun\footnote{Retrieved on 2016-04-04 \url{https://www.mailgun.com/}}, which sends email on behalf of the system. Whenever a user requests to reset a password, an email with a unique link is sent to the users email address. The link is automatically created by Django and could look like this:  \texttt{.../authentication/reset/MTY/4as-663c1494cfc7b061c25d/}. This links redirects to a page from where the user can enter a new password.
 
 \subsubsection*{Dashboard}
 The \texttt{dashboard} app is responsible for handling the users dashboard. When a user logs in, they are presented with a personal dashboard that shows a variety of information, relevant for that user.
@@ -215,13 +215,13 @@ It's possible to define functions which belongs to a specific model. The Room mo
 def total_subscribers(self):
     return len(self.subscription_set.all())
 \end{lstlisting}
-This way of reasoning is simple to follow and puts logic belonging to a specific model right where the model is. The method as it is implemented above, retreieves the Room's subscriptions in an array, and uses the \texttt{len()} Python method to count the length of it. Another way of doing this, more closely related to Django, is by calling the \texttt{count()} method like this \texttt{return self.subscription\_set.count()}.
+This way of reasoning is simple to follow and puts logic belonging to a specific model right where the model is. The method as it is implemented above, retrieves the Room's subscriptions in an array, and uses the \texttt{len()} Python method to count the length of it. Another way of doing this, more closely related to Django, is by calling the \texttt{count()} method like this \texttt{return self.subscription\_set.count()}.
 
 %The owner is defined as a foreign key and represents a User relationship. In this case, a Room must belong to a User. 
 The \texttt{date\_time} and \texttt{updated\_at} fields are automatically updated with the \texttt{auto\_now\_add} and \texttt{auto\_now} attributes set to \texttt{True}. The model also has a \texttt{Meta} class defined. In this case it only defines the unique database keys, but it could contain more information.
 
 \subsubsection*{Input sanitation}
-The voting app contains a lot of user input. Each room has a name that is created by the user. The groups, questions and answers also relies heavily on user generated input. To prevent users from creating malicious input, we are sanitizing everything using Bleach on the server side. Bleach is a \emph{"... whitelist-based HTML sanitizing library that escapes or strips markup and attributes."}\footnote{Retrieved on 2016-04-04\url{https://bleach.readthedocs.org/en/latest/}}. We are then capable of sanitizing input by calling the \texttt{clean} method on a Bleach instance. An example of using bleach in the project, can be found in the \texttt{question\_answer\_create} method as seen in listing \ref{lst:bleach}:
+The voting app contains a lot of user input. Each room has a name that is created by the user. The groups, questions and answers also relies heavily on user generated input. To prevent users from creating malicious input, we are sanitizing everything using Bleach on the server side. Bleach is a \emph{"... whitelist-based HTML sanitizing library that escapes or strips markup and attributes."}\footnote{Retrieved on 2016-04-04 \url{https://bleach.readthedocs.org/en/latest/}}. We are then capable of sanitizing input by calling the \texttt{clean} method on a Bleach instance. An example of using bleach in the project, can be found in the \texttt{question\_answer\_create} method as seen in listing \ref{lst:bleach}:
 
 \begin{lstlisting}[caption=Using Bleach to sanitize input, label=lst:bleach]
 bleach.clean(new_question.question_text, tags=ALLOWED_TAGS)
